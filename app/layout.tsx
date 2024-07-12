@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Mochiy_Pop_One, Noto_Serif_TC } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const mochiyPopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
+const NotoSerifTC = Noto_Serif_TC({ weight: ["200", "300", "400", "500", "600", "700", "900"], subsets: ["latin"] })
+// other good font: Mochiy Pop One, Potta One, BIZ UDPMincho, Zen Maru Gothic
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${mochiyPopOne.className} ${inter.className}`}>{children}</body>
     </html>
   );
 }
