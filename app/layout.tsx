@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Mochiy_Pop_One } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import ToasterContext from "./context/ToasterContext";
+import AuthContext from "./context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const mochiyPopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
@@ -20,8 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${mochiyPopOne.className} ${inter.className}`}>
-        <Navbar />
-        {children}
+        <AuthContext>
+          <ToasterContext />
+          <Navbar />
+          {children}
+        </AuthContext>
       </body>
     </html>
   );
