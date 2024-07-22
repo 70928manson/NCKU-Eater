@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { UtensilsCrossed } from 'lucide-react';
+import { UserIcon, MailIcon, UtensilsCrossed } from 'lucide-react';
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -21,35 +21,42 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BsGithub, BsGoogle, BsInstagram } from "react-icons/bs";
 
 import DOMPurify from "isomorphic-dompurify";
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+
+import { useRouter } from 'next/navigation';
 
 import AuthSocialButton from "./AuthSocialButton";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 const formSchema = z.object({
-    username: z.string().min(1, { message: "Username has to be filled." }).max(16, { message: "Username length must less than 16." }),
+    username: z.string().min(1, { message: "Username has to be filled." }).max(16, { message: "Username length must less than 16." }).optional(),
     email: z.string().min(1, { message: "Email has to be filled." }).max(50).email({ message: "Invalid email." }),
     password: z.string().min(1, { message: "Password has to be filled." }).max(50),
 });
 
 type Variant = 'LOGIN' | 'REGISTER';
-type SocialType = 'Github' | 'Google' | 'Instagram';
+type SocialType = 'github' | 'google' | 'instagram';  // 這邊是 for next-auth signIn 的 參數, 需注意大小寫, 不能自訂名稱
 
 const AuthForm = () => {
     const [variant, setVariant] = useState<Variant>('LOGIN');
     const [isLoading, setIsLoading] = useState(false);
+
+    const session = useSession();
+    const router = useRouter();
 
     const toggleVariant = useCallback(() => {
         if (variant === 'LOGIN') {
             setVariant('REGISTER');
         } else {
             setVariant('LOGIN');
-        }
+        };
+        form.reset();
     }, [variant]);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -61,21 +68,23 @@ const AuthForm = () => {
         },
     });
 
-    function onSubmit(data: z.infer<typeof formSchema>) {
+    function onSubmit(data: z.infer<typeof formSchema>) {      
         // sanitize, XSS 攻擊防範
         const sanitizedData = {
-            username: DOMPurify.sanitize(data.username),
             email: DOMPurify.sanitize(data.email),
             password: DOMPurify.sanitize(data.password),
         };
-        console.log("sanitizedData", sanitizedData);
 
         setIsLoading(true);
 
         if (variant === "REGISTER") {
+            const registerData = data.username && {
+                username: DOMPurify.sanitize(data.username),
+                ...sanitizedData
+            }
             // Axios Register
-            axios.post('api/register', sanitizedData)
-                .then(() => {
+            axios.post('api/register', registerData)
+                .then(() => {                    
                     signIn("crendentials", data);
                 })
                 .catch((err) => {
@@ -88,6 +97,26 @@ const AuthForm = () => {
 
         if (variant === "LOGIN") {
             // NextAuth Login
+            signIn('credentials', {
+                ...sanitizedData,
+                redirect: false
+            })
+                .then((callback) => {                    
+                    if (callback?.error) {
+                        toast.error("Invalid credentials");
+                    };
+                    if (callback?.ok && !callback?.error) {
+                        toast.success("Logged in!");
+                        router.push("/");
+                    }
+                })
+                .catch((err) => {
+                    console.log("err", err);
+
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                })
         };
 
     };
@@ -96,7 +125,27 @@ const AuthForm = () => {
         setIsLoading(true);
 
         // NextAuth Social Sign In
-    }
+        signIn(action, { redirect: false })
+            .then((callback) => {
+                if (callback?.error) {
+                    toast.error('Invalid Credentials');
+                };
+
+                if (callback?.ok && !callback?.error) {
+                    toast.success('Logged in');
+                };
+            })
+            .finally(() => setIsLoading(false));
+    };
+
+    useEffect(() => {
+        console.log("session", session);
+
+        if (session?.status === "authenticated") {
+            console.log("Auth good !!!");
+            router.push("/");
+        };
+    }, [session?.status]);
 
     return (
         <>
@@ -120,7 +169,7 @@ const AuthForm = () => {
                                             <FormItem>
                                                 <FormLabel>Username</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="username" disabled={isLoading} {...field} />
+                                                    <Input suffixIcon={<UserIcon />} placeholder="username" disabled={isLoading} {...field} />
                                                 </FormControl>
                                                 {/* <FormDescription>
                                                     This is your public display name.
@@ -138,7 +187,7 @@ const AuthForm = () => {
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="email" disabled={isLoading} {...field} />
+                                            <Input suffixIcon={<MailIcon />} placeholder="email" disabled={isLoading} {...field} />
                                         </FormControl>
                                         {/* <FormDescription>
                                             This is your public display email.
@@ -154,7 +203,7 @@ const AuthForm = () => {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="password" disabled={isLoading} {...field} />
+                                            <PasswordInput placeholder="password" disabled={isLoading} {...field} />
                                         </FormControl>
                                         {/* <FormDescription>
                                             This is your password.
@@ -187,15 +236,15 @@ const AuthForm = () => {
                         <div className="mt-6 flex gap-2">
                             <AuthSocialButton
                                 icon={BsGithub}
-                                onClick={() => socialAction('Github')}
+                                onClick={() => socialAction('github')}
                             />
                             <AuthSocialButton
                                 icon={BsGoogle}
-                                onClick={() => socialAction('Google')}
+                                onClick={() => socialAction('google')}
                             />
                             <AuthSocialButton
                                 icon={BsInstagram}
-                                onClick={() => socialAction('Instagram')}
+                                onClick={() => socialAction('instagram')}
                             />
                         </div>
                     </div>
