@@ -63,6 +63,22 @@ export const authOptions: AuthOptions = {
             },
         })
     ],
+    // https://next-auth.js.org/getting-started/typescript
+    callbacks: {
+        async session({ session, token, user }) {
+            await connect();
+            const userData = await User.findOne({ email: session?.user?.email, });
+            return {
+                ...session,
+                user: {
+                    id: userData._id,
+                    username: userData.username,
+                    email: userData.email
+                }
+            };
+            //return session // The return type will match the one returned in `useSession()`
+        },
+    },
     debug: process.env.NODE_ENV === "development",
     session: {
         strategy: "jwt"
