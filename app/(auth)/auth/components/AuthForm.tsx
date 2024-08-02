@@ -170,7 +170,7 @@ const AuthForm = () => {
                                             <FormItem>
                                                 <FormLabel>Username</FormLabel>
                                                 <FormControl>
-                                                    <Input suffixIcon={<UserIcon />} placeholder="username" disabled={isLoading} {...field} />
+                                                    <Input className="text-black" suffixIcon={<UserIcon />} placeholder="username" disabled={isLoading} {...field} />
                                                 </FormControl>
                                                 {/* <FormDescription>
                                                     This is your public display name.
@@ -188,7 +188,7 @@ const AuthForm = () => {
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
-                                            <Input suffixIcon={<MailIcon />} placeholder="email" disabled={isLoading} {...field} />
+                                            <Input className="text-black" suffixIcon={<MailIcon />} placeholder="email" disabled={isLoading} {...field} />
                                         </FormControl>
                                         {/* <FormDescription>
                                             This is your public display email.
@@ -204,7 +204,7 @@ const AuthForm = () => {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <PasswordInput placeholder="password" disabled={isLoading} {...field} />
+                                            <PasswordInput className="text-black" placeholder="password" disabled={isLoading} {...field} />
                                         </FormControl>
                                         {/* <FormDescription>
                                             This is your password.
