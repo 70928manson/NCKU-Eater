@@ -35,7 +35,7 @@ import AuthSocialButton from "./AuthSocialButton";
 import { PasswordInput } from "@/components/ui/passwordInput";
 
 const formSchema = z.object({
-    username: z.string().min(1, { message: "Username has to be filled." }).max(16, { message: "Username length must less than 16." }).optional(),
+    username: z.union([z.string().length(0), z.string().min(1, { message: "Username has to be filled." }), z.string().max(16, { message: "Username length must less than 16." })]).optional(),
     email: z.string().min(1, { message: "Email has to be filled." }).max(50).email({ message: "Invalid email." }),
     password: z.string().min(1, { message: "Password has to be filled." }).max(50),
 });
@@ -88,7 +88,9 @@ const AuthForm = () => {
                     signIn("crendentials", data);
                 })
                 .catch((err) => {
-                    toast.error("Someting went wrong!");
+                    console.log("err", err)
+                    // toast.error("Someting went wrong!");
+                    toast.error(err.response.data);
                 })
                 .finally(() => {
                     setIsLoading(false);
