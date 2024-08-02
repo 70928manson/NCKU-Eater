@@ -19,6 +19,10 @@ const userSchema = new Schema(
             required: false,
             // select: false,
         },
+        privilege: {
+            type: String,
+            required: false,
+        }
     },
     { timestamps: true }
 );
