@@ -73,4 +73,113 @@
   .word-spacing-wider {
     word-spacing: 0.2rem;
   }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #09090a;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #5c5c7b;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7878a3;
+  }
+}
+
+@layer components {
+  .main-container {
+    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+  }
+
+  .head-text {
+    @apply text-heading2-bold text-light-1;
+  }
+
+  .activity-card {
+    @apply flex items-center gap-2 rounded-md bg-dark-2 px-7 py-4;
+  }
+
+  .no-result {
+    @apply text-center !text-base-regular text-light-3;
+  }
+
+  .searchbar {
+    @apply flex gap-1 rounded-lg bg-dark-3 px-4 py-2;
+  }
+
+  .searchbar-input {
+    @apply border-none bg-dark-3 text-base-regular text-light-4 outline-none !important;
+  }
+
+  .navbar {
+    @apply fixed top-0 z-30 flex w-full h-[4rem] items-center justify-between bg-dark-2 px-6 py-3;
+  }
+
+  .footer {
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+  }
+
+  .footer-container {
+    @apply flex items-center justify-between gap-3 xs:gap-5;
+  }
+
+  .footer-link {
+    @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
+  }
+
+  .sidebar {
+    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-2 pb-5 pt-28 max-md:hidden;
+  }
+
+  .sidebar-link {
+    @apply relative flex justify-start gap-4 rounded-lg p-4 hover:bg-dark-4;
+  }
+
+  .pagination {
+    @apply mt-10 flex w-full items-center justify-center gap-5;
+  }
+
+  /* lottery */
+  .lottery {
+    @apply w-2/3 flex flex-col items-center;
+  }
+
+  .lottery-roll-title {
+    @apply w-full bg-light-2 text-dark-1 my-6 border border-solid rounded text-center
+    overflow-hidden max-h-14 relative;
+  }
+
+  .lottery-roll-title h5 {
+    @apply m-0 text-xl relative text-center p-3
+  }
+
+  .lottery-button {
+    @apply text-heading4-medium border-2 rounded p-3 mb-6 hover:bg-light-1 hover:text-dark-1 cursor-pointer
+  }
+
+  /* lottery animation */
+  .lottery-roll-title .span {
+    animation-name: spin;
+    animation-duration: 0.18s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  @keyframes spin {
+    from {
+      top: 0;
+    }
+
+    to {
+      top: calc(-30px * 6);
+    }
+  }
 }
