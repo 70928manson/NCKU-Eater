@@ -16,19 +16,19 @@ export const sidebarLinks = [
     },
     // {
     //     imgURL: "/assets/create.svg",
-    //     route: "/create-thread",
-    //     label: "Create Thread",
+    //     route: "/create-note",
+    //     label: "Create Note",
     // },
     // {
     //     imgURL: "/assets/community.svg",
     //     route: "/communities",
     //     label: "Communities",
     // },
-    {
-        imgURL: "/assets/user.svg",
-        route: "/profile",
-        label: "Profile",
-    },
+    // {
+    //     imgURL: "/assets/user.svg",
+    //     route: "/profile",
+    //     label: "Profile",
+    // },
 ];
 
 
