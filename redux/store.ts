@@ -1,11 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import counterReducer from './slices/testSlices';
+import { googleSheetApi } from './services/storeServices';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            counter: counterReducer,
+            [googleSheetApi.reducerPath]: googleSheetApi.reducer,
+            counterReducer,
         },
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().concat(googleSheetApi.middleware),
     });
 };
 
