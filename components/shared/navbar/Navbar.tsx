@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { Bird, LogOutIcon, UserIcon } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -14,10 +14,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import {
-    LogOut,
-} from "lucide-react"
 
 const Navbar = () => {
     const session = useSession();
@@ -46,10 +42,10 @@ const Navbar = () => {
                                 <DropdownMenuContent>
                                     <DropdownMenuLabel>{session?.data?.user?.username ? session?.data?.user?.username : 'Account'}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem> 
+                                    <DropdownMenuItem className="cursor-pointer"> 
                                         <UserIcon className="mr-2 h-4 w-4" /> Profile
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem>  
+                                    <DropdownMenuItem className="cursor-pointer"  onClick={() => signOut()}>  
                                         <LogOutIcon className="mr-2 h-4 w-4" />Sign Out
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>

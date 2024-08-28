@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LogOutIcon } from 'lucide-react';
+import { signOut } from "next-auth/react";
 
 const Sidebar = () => {
     const router = useRouter();
@@ -39,7 +40,7 @@ const Sidebar = () => {
             <div className="mt-10 px-6">
                 {
                     isUserLogIn && (
-                        <div className="sidebar-link cursor-pointer">
+                        <div className="sidebar-link cursor-pointer" onClick={() => signOut()}>
                             <LogOutIcon color="white" size={24} />
                             <p className="text-light-2 max-lg:hidden">Sign Out</p>
                         </div>
