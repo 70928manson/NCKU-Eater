@@ -1,5 +1,6 @@
 "use client";
 
+import { stores } from "@/constants/stores";
 import FoodLottery from "./components/FoodLottery";
 import LocationMap from "./components/LocationMap";
 
@@ -8,8 +9,7 @@ import { useGetAllStoresQuery } from "@/redux/services/storeServices";
 export default function Home() {
   //抓出全部的店家資料
   const { data, error, isLoading } = useGetAllStoresQuery("all");
-
-  console.log("data", data);
+  console.log("rtk data", data)
   
   return (
     <div className="flex flex-col items-center w-full">
@@ -17,7 +17,7 @@ export default function Home() {
         NCKU Food Draw
       </h2>
       <div className="text-light-1 w-full flex flex-col items-center">
-        <FoodLottery />
+        <FoodLottery stores={stores}/>
         <LocationMap />
       </div>
     </div>
