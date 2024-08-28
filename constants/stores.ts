@@ -1,3 +1,8 @@
+export type Store = {
+    _key: number;
+    name: string;
+};
+
 export const stores = [
     {
         _key: 1,
