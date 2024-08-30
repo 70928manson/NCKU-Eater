@@ -19,14 +19,6 @@ export const googleSheetApi = createApi({
             query: () => 'getAllStores',  // 使用 API route 的路徑
         }),
     }),
-    // baseQuery: fetchBaseQuery({
-    //     baseUrl: 'https://sheets.googleapis.com/v4/spreadsheets/'
-    // }),
-    // endpoints: (builder) => ({
-    //     getAllStores: builder.query<Store[], "all">({
-    //         query: () => `${process.env.APP_ID}/values/${process.env.APP_SHEET}?alt=json&key=${process.env.APP_KEY}`,
-    //     }),
-    // }),
 })
 
 // Export hooks for usage in functional components, which are
