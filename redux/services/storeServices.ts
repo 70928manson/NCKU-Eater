@@ -12,13 +12,21 @@ type Store = {
 export const googleSheetApi = createApi({
     reducerPath: 'googleSheetApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://sheets.googleapis.com/v4/spreadsheets/'
+        baseUrl: '/api/',  // 指向 Next.js 的 API route, 之後正式要改到 github
     }),
     endpoints: (builder) => ({
         getAllStores: builder.query<Store[], "all">({
-            query: () => `${process.env.REACT_APP_ID}/values/${process.env.REACT_APP_SHEET}?alt=json&key=${process.env.REACT_APP_KEY}`,
+            query: () => 'getAllStores',  // 使用 API route 的路徑
         }),
     }),
+    // baseQuery: fetchBaseQuery({
+    //     baseUrl: 'https://sheets.googleapis.com/v4/spreadsheets/'
+    // }),
+    // endpoints: (builder) => ({
+    //     getAllStores: builder.query<Store[], "all">({
+    //         query: () => `${process.env.APP_ID}/values/${process.env.APP_SHEET}?alt=json&key=${process.env.APP_KEY}`,
+    //     }),
+    // }),
 })
 
 // Export hooks for usage in functional components, which are
