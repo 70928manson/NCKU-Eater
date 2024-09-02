@@ -1,6 +1,5 @@
 "use client";
 
-import { stores } from "@/constants/stores";
 import FoodLottery from "./components/FoodLottery";
 import LocationMap from "./components/LocationMap";
 
@@ -10,6 +9,8 @@ export default function Home() {
   //抓出全部的店家資料
   const { data, error, isLoading } = useGetAllStoresQuery("all");
   console.log("rtk data", data)
+
+  const stores = data || [];
   
   return (
     <div className="flex flex-col items-center w-full">

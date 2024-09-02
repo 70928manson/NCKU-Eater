@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FoodSelector from './FoodSelector'
-import { Store } from '@/constants/stores';
 import { getRandomNum } from '@/app/utils';
+import { Store } from '@/app/types/store';
 
 interface FoodLotteryProps {
     stores: Store[];
 }
 
 const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
-    const [drawCheck, setDrawCheck] = useState(false);
+    const [drawCheck, setDrawCheck] = useState(true);
 
     const [tempStores, setTempStores] = useState(stores);
 
@@ -19,7 +19,6 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
         Array.prototype.forEach.call(list, item => item.classList.add(`span`));
         const duration = 1500; // 拉霸效果執行多久
         setTimeout(() => {
-            console.log("檢查")
             // 停止拉霸動畫
             Array.prototype.forEach.call(list, item => item.removeAttribute('class'));
             setDrawCheck(false);
@@ -39,9 +38,6 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
         // splice 返回被移除的元素 (splice 回傳陣列，所以取出第一個元素)
         const removedStore = test.splice(randomNum, 1, firstStore)[0];
 
-        console.log("removedStore", removedStore);
-        
-
         // 3. 將被移除的元素 (stores[randomNum] 原本的值) 賦值給 stores[0]
         test[0] = removedStore;
 
@@ -57,6 +53,12 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
         slotAnimationHandler();
     };
 
+    useEffect(() => {
+        if (stores) {
+            setTempStores(stores);
+        };
+    }, [stores]);
+
     return (
         <div className="text-light-1 w-full flex flex-col items-center">
             <FoodSelector />
@@ -69,7 +71,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
                     {
                         tempStores.map((store) => {
                             return (
-                                <h5 key={store._key}>{store.name}</h5>
+                                <h5 key={store.id}>{store.title}</h5>
                             )
                         })
                     }
