@@ -1,12 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-type Store = {
-    id: number;
-    title: string;
-    src: string;
-    tags: string[];
-    likes: number; // 多少人按讚
-};
+import { Store } from '@/app/types/store';
 
 // Define a service using a base URL and expected endpoints
 export const googleSheetApi = createApi({
