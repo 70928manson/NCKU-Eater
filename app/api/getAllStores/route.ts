@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
+import { Store } from "@/app/types/store";
+import { v4 as uuidv4 } from 'uuid';
 
 const DATA_SOURCE_URL = "https://sheets.googleapis.com/v4/spreadsheets/";
+
+type GoogleSheetResponse = {
+    majorDimension: string;
+    range: string;
+    values: string[][];
+}
 
 export async function GET() {
     try {
@@ -8,10 +16,22 @@ export async function GET() {
 
         const url = `${DATA_SOURCE_URL}${APP_ID}/values/${APP_SHEET}?alt=json&key=${APP_KEY}`;
         const res = await fetch(url);
+        const jsonRes: GoogleSheetResponse = await res.json();
 
-        const stores = await res.json();
+        const stores = jsonRes?.values || [];
 
-        return NextResponse.json(stores);
+        // 把 response 組成我們想要的資料形式
+        const result: Store[] = stores.map((storeData: string[]) => {
+            const tags = storeData[1].split(',').map(item => item.trim());
+            return {
+                id: uuidv4(),
+                title: storeData[0],
+                tags: tags,
+                src: storeData[2],
+            };
+        }).slice(1);
+
+        return NextResponse.json(result);
     }
     catch (err: any) {
         return new NextResponse('Internal Server Error', { status: 500 });
