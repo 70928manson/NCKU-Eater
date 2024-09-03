@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import counterReducer from './slices/testSlices';
+import lotteryReducer from './slices/lotterySlices';
 import { googleSheetApi } from './services/storeServices';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
             [googleSheetApi.reducerPath]: googleSheetApi.reducer,
-            counterReducer,
+            lottery: lotteryReducer
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().concat(googleSheetApi.middleware),
