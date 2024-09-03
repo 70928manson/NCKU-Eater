@@ -1,24 +1,24 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
+import { Store } from '@/app/types/store';
 
 const LocationMap = () => {
+    const [mapSrc, setMapSrc] = useState("");
     const store = useSelector((state: RootState) => state.lottery.store);
-    const mapSrc = store.src;
     const mapRef = useRef<HTMLIFrameElement>(null);
 
-    const getGoogleMapContent = (src: string) => {
+    const getGoogleMapContent = (store: Store) => {
+        const src = store.src;
         const duration = 1500; // 拉霸效果執行多久
         setTimeout(() => {
-            if (mapRef.current) {
-                mapRef.current.src = src;
-            }
+            setMapSrc(src);
         }, duration);
     };
 
     useEffect(() => {
-        getGoogleMapContent(mapSrc);
+        getGoogleMapContent(store);
     }, [store]);
 
     return (
@@ -28,10 +28,10 @@ const LocationMap = () => {
             </div>
             <iframe
                 title="googleMap"
-                ref={mapRef} 
+                ref={mapRef}
                 loading="lazy"
-                className="transition-all duration-500 ease-in-out w-full h-full"
-                src=""
+                className={clsx("transition-all duration-500 ease-in-out w-full h-full")}
+                src={mapSrc}
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade">
             </iframe>
