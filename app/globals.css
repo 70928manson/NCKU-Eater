@@ -162,7 +162,7 @@
   }
 
   .lottery-button {
-    @apply text-heading4-medium border-2 rounded p-3 mb-6 hover:bg-light-1 hover:text-dark-1 cursor-pointer
+    @apply text-heading4-medium border-2 rounded p-3 mb-6 hover:bg-light-1 hover:text-dark-1
   }
 
   /* lottery animation */

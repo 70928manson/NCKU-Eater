@@ -82,13 +82,10 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
                     }
                 </div>
                 {/* 抽獎按鈕 */}
-                <div className="lottery-button" onClick={handleClick}>
+                <button className="lottery-button" onClick={handleClick} disabled={stores.length === 0}>
                     點我開抽
-                </div>
+                </button>
             </div>
-
-            {/* <h5>今天吃什麼(roll)</h5> */}
-
         </div>
     )
 }
