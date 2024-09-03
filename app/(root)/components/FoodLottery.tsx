@@ -7,12 +7,14 @@ import { Store } from '@/app/types/store';
 import { updateStore } from '@/redux/slices/lotterySlices';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { Loader2Icon } from 'lucide-react';
 
 interface FoodLotteryProps {
     stores: Store[];
+    isLoading: boolean;
 }
 
-const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
+const FoodLottery: React.FC<FoodLotteryProps> = ({ stores, isLoading }) => {
     const [statusText, setStatusText] = useState("今天吃什麼");
 
     const [allStores, setAllStores] = useState(stores);
@@ -61,7 +63,6 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
         slotAnimationHandler();
     };
 
-    // TODO: 效能問題, 移至後端做
     const filteredStores = useMemo(() => {
         return stores.filter(store =>
             selectedTags.every(tag => store.tags.includes(tag))
@@ -69,8 +70,6 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
     }, [stores, selectedTags]);
 
     useEffect(() => {
-        console.log("filteredStores", filteredStores);
-        
         setAllStores(filteredStores);
 
         if (filteredStores.length === 0) {
@@ -87,7 +86,10 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
                 {/* 滾輪title區 */}
                 <div className="lottery-roll-title font-sans" id="store-title">
                     {
-                        statusText ? <h5>{statusText}</h5> : null
+                        statusText ?
+                            <h5 className="flex justify-center items-center">
+                                {isLoading ? <Loader2Icon className="animate-loading" size={30} /> : statusText}
+                            </h5> : null
                     }
                     {
                         allStores.map((store) => {

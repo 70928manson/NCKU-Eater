@@ -18,7 +18,7 @@ export default function Home() {
         NCKU Food Draw
       </h2>
       <div className="text-light-1 w-full flex flex-col items-center">
-        <FoodLottery stores={stores}/>
+        <FoodLottery stores={stores} isLoading={isLoading} />
         <LocationMap />
       </div>
     </div>
