@@ -1,7 +1,19 @@
-import MultipleSelector from '@/components/selector/MultipleSelector';
+import MultipleSelector, { Option } from '@/components/selector/MultipleSelector';
 import { OPTIONS } from '@/constants/options';
+import { updateSelectedTags } from '@/redux/slices/lotterySlices';
+import { useDispatch } from 'react-redux';
 
 const FoodSelector = () => {
+    const dispatch = useDispatch();
+
+    const handleSelectOnChange = (e: Option[]) => {
+        const filterTags = e.map((tag: Option) => {
+            return `${tag.value}`
+        });
+        
+        dispatch(updateSelectedTags(filterTags))
+    };
+
     return (
         <div className="flex w-full flex-col gap-5 px-10 text-light-1">
             <MultipleSelector
@@ -13,9 +25,10 @@ const FoodSelector = () => {
                     </p>
                 }
                 hidePlaceholderWhenSelected
+                onChange={(e:Option[]) => handleSelectOnChange(e)}
             />
         </div>
-    )
-}
+    );
+};
 
-export default FoodSelector
+export default FoodSelector;

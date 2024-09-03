@@ -1,20 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import FoodSelector from './FoodSelector'
 import { getRandomNum } from '@/app/utils';
 import { Store } from '@/app/types/store';
 import { updateStore } from '@/redux/slices/lotterySlices';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 interface FoodLotteryProps {
     stores: Store[];
 }
 
 const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
-    const [drawCheck, setDrawCheck] = useState(true);
+    const [statusText, setStatusText] = useState("今天吃什麼");
 
     const [allStores, setAllStores] = useState(stores);
+
+    const selectedTags = useSelector((state: RootState) => state.lottery.selectedTags);
 
     const dispatch = useDispatch();
 
@@ -25,12 +28,12 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
         setTimeout(() => {
             // 停止拉霸動畫
             Array.prototype.forEach.call(list, item => item.removeAttribute('class'));
-            setDrawCheck(false);
+            setStatusText("");
         }, duration);
     };
 
     // 亂數抽獎, 將陣列中隨機選到的店家與第一個店家互換
-    const getDrawShop = (stores: Store[], randomNum: number) => {
+    const getDrawShop = (randomNum: number) => {
         const tempStores = [...allStores]
 
         // 儲存原來的 stores[0]
@@ -50,19 +53,32 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
     };
 
     const handleClick = () => {
-        const storesLength = stores.length;
+        const storesLength = allStores.length;
         const randomNum = getRandomNum(storesLength);
 
-        getDrawShop(stores, randomNum);
+        getDrawShop(randomNum);
 
         slotAnimationHandler();
     };
 
+    // TODO: 效能問題, 移至後端做
+    const filteredStores = useMemo(() => {
+        return stores.filter(store =>
+            selectedTags.every(tag => store.tags.includes(tag))
+        );
+    }, [stores, selectedTags]);
+
     useEffect(() => {
-        if (stores) {
-            setAllStores(stores);
-        };
-    }, [stores]);
+        console.log("filteredStores", filteredStores);
+        
+        setAllStores(filteredStores);
+
+        if (filteredStores.length === 0) {
+            setStatusText("無資料");
+        } else {
+            setStatusText("今天吃什麼");
+        }
+    }, [filteredStores]);
 
     return (
         <div className="text-light-1 w-full flex flex-col items-center">
@@ -71,7 +87,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
                 {/* 滾輪title區 */}
                 <div className="lottery-roll-title font-sans" id="store-title">
                     {
-                        drawCheck ? <h5>今天吃什麼</h5> : null
+                        statusText ? <h5>{statusText}</h5> : null
                     }
                     {
                         allStores.map((store) => {
@@ -82,7 +98,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
                     }
                 </div>
                 {/* 抽獎按鈕 */}
-                <button className="lottery-button" onClick={handleClick} disabled={stores.length === 0}>
+                <button className="lottery-button" onClick={handleClick} disabled={allStores.length === 0}>
                     點我開抽
                 </button>
             </div>
