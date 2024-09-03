@@ -96,7 +96,7 @@
 
 @layer components {
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-12 pt-28 sm:px-10;
   }
 
   .head-text {
@@ -120,11 +120,11 @@
   }
 
   .navbar {
-    @apply fixed top-0 z-30 flex w-full h-[4rem] items-center justify-between bg-dark-2 px-6 py-3;
+    @apply fixed top-0 z-30 flex w-full h-[4rem] items-center justify-between bg-dark-2 px-2 xs:px-4 py-2 xs:py-3;
   }
 
   .footer {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-2 xs:p-4 backdrop-blur-lg md:hidden;
   }
 
   .footer-container {

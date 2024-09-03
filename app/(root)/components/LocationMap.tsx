@@ -1,33 +1,32 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 const LocationMap = () => {
-    // const { mapSrc, vageMapSrc } = useSelector((state) => state.draw);
+    const store = useSelector((state: RootState) => state.lottery.store);
+    const mapSrc = store.src;
+    const mapRef = useRef<HTMLIFrameElement>(null);
 
-    // const getGoogleMapContent = (src) => {
-    //     const duration = 1500; // 拉霸效果執行多久
-    //     setTimeout(() => {
-    //         mapRef.current.src = src;
-    //     }, duration);
-    // }
+    const getGoogleMapContent = (src: string) => {
+        const duration = 1500; // 拉霸效果執行多久
+        setTimeout(() => {
+            if (mapRef.current) {
+                mapRef.current.src = src;
+            }
+        }, duration);
+    };
 
-    // useEffect(() => {
-    //     if (!initText) {
-    //         if (vageCheck) {
-    //             getGoogleMapContent(vageMapSrc[0])
-    //         } else if (!vageCheck) {
-    //             getGoogleMapContent(mapSrc[0])
-    //         }
-    //     }
-    // }, [mapSrc, vageMapSrc])
+    useEffect(() => {
+        getGoogleMapContent(mapSrc);
+    }, [store]);
 
     return (
-        <div className="w-full bg-white text-dark-1">
-            Mappppp
+        <div className="w-full h-[25vh] xs:h-[40vh] md:h-[50vh] bg-white text-dark-1">
             <iframe
                 title="googleMap"
-                // ref={mapRef} 
+                ref={mapRef} 
                 loading="lazy"
-                className="transition-all duration-500 ease-in-out"
+                className="transition-all duration-500 ease-in-out w-full h-full"
                 src=""
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade">
