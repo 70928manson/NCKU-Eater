@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 import FoodSelector from './FoodSelector'
 import { getRandomNum } from '@/app/utils';
 import { Store } from '@/app/types/store';
+import { updateStore } from '@/redux/slices/lotterySlices';
+import { useDispatch } from 'react-redux';
 
 interface FoodLotteryProps {
     stores: Store[];
@@ -12,7 +14,9 @@ interface FoodLotteryProps {
 const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
     const [drawCheck, setDrawCheck] = useState(true);
 
-    const [tempStores, setTempStores] = useState(stores);
+    const [allStores, setAllStores] = useState(stores);
+
+    const dispatch = useDispatch();
 
     const slotAnimationHandler = () => {
         const list = document.querySelectorAll('#store-title > h5');
@@ -25,23 +29,24 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
         }, duration);
     };
 
-    // 亂數抽獎
+    // 亂數抽獎, 將陣列中隨機選到的店家與第一個店家互換
     const getDrawShop = (stores: Store[], randomNum: number) => {
-        //將陣列中隨機選到的店家與第一個店家互換
+        const tempStores = [...allStores]
 
-        const test = [...tempStores]
+        // 儲存原來的 stores[0]
+        const firstStore = tempStores[0];
 
-        // 1. 儲存原來的 stores[0]
-        const firstStore = test[0];
-
-        // 2. 從 stores 中移除 stores[randomNum]，並將 stores[0] 放在該位置
+        // 從 stores 中移除 stores[randomNum]，並將 stores[0] 放在該位置
         // splice 返回被移除的元素 (splice 回傳陣列，所以取出第一個元素)
-        const removedStore = test.splice(randomNum, 1, firstStore)[0];
+        const removedStore = tempStores.splice(randomNum, 1, firstStore)[0];
 
-        // 3. 將被移除的元素 (stores[randomNum] 原本的值) 賦值給 stores[0]
-        test[0] = removedStore;
+        // 將被移除的元素 (stores[randomNum] 原本的值) 賦值給 stores[0]
+        tempStores[0] = removedStore;
 
-        setTempStores(test);
+        setAllStores(tempStores);
+
+        // 將被抽中的店家資訊給 redux state, 給其他 component 使用
+        dispatch(updateStore(tempStores[0]));
     };
 
     const handleClick = () => {
@@ -55,7 +60,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
 
     useEffect(() => {
         if (stores) {
-            setTempStores(stores);
+            setAllStores(stores);
         };
     }, [stores]);
 
@@ -69,7 +74,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores }) => {
                         drawCheck ? <h5>今天吃什麼</h5> : null
                     }
                     {
-                        tempStores.map((store) => {
+                        allStores.map((store) => {
                             return (
                                 <h5 key={store.id}>{store.title}</h5>
                             )
