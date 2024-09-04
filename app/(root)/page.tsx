@@ -8,9 +8,8 @@ import { useGetAllStoresQuery } from "@/redux/services/storeServices";
 export default function Home() {
   //抓出全部的店家資料
   const { data, error, isLoading } = useGetAllStoresQuery("all");
-  console.log("rtk data", data)
 
-  const stores = data || [];
+  const allStores = data || [];
   
   return (
     <div className="flex flex-col items-center w-full">
@@ -18,7 +17,7 @@ export default function Home() {
         NCKU Food Draw
       </h2>
       <div className="text-light-1 w-full flex flex-col items-center">
-        <FoodLottery stores={stores} isLoading={isLoading} />
+        <FoodLottery allStores={allStores} isLoading={isLoading} />
         <LocationMap />
       </div>
     </div>
