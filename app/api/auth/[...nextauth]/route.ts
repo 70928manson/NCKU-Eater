@@ -74,7 +74,7 @@ export const authOptions: AuthOptions = {
                     id: userData._id,
                     username: userData.username,
                     email: userData.email,
-                    favoriteStores: userData.favoriteStores
+                    favoriteStores: userData.favoriteStores || []
                 }
             };
             // return session 
