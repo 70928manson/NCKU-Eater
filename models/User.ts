@@ -30,7 +30,7 @@ const userSchema = new Schema(
             type: String,
             required: false,
         },
-        favoriteStore: {
+        favoriteStores: {
             type: [storeSchema],
             required: false,
         },
