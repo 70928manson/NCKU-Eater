@@ -10,14 +10,15 @@ import { RootState } from '@/redux/store';
 import { Loader2Icon } from 'lucide-react';
 
 interface FoodLotteryProps {
-    stores: Store[];
+    allStores: Store[];
     isLoading: boolean;
 }
 
-const FoodLottery: React.FC<FoodLotteryProps> = ({ stores, isLoading }) => {
+const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
     const [statusText, setStatusText] = useState("今天吃什麼");
+    const [isDrawing, setIsDrawing] = useState(false);
 
-    const [allStores, setAllStores] = useState(stores);
+    const [stores, setStores] = useState(allStores);
 
     const selectedTags = useSelector((state: RootState) => state.lottery.selectedTags);
 
@@ -36,7 +37,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores, isLoading }) => {
 
     // 亂數抽獎, 將陣列中隨機選到的店家與第一個店家互換
     const getDrawShop = (randomNum: number) => {
-        const tempStores = [...allStores]
+        const tempStores = [...stores]
 
         // 儲存原來的 stores[0]
         const firstStore = tempStores[0];
@@ -48,29 +49,32 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores, isLoading }) => {
         // 將被移除的元素 (stores[randomNum] 原本的值) 賦值給 stores[0]
         tempStores[0] = removedStore;
 
-        setAllStores(tempStores);
+        setStores(tempStores);
 
         // 將被抽中的店家資訊給 redux state, 給其他 component 使用
         dispatch(updateStore(tempStores[0]));
     };
 
-    const handleClick = () => {
-        const storesLength = allStores.length;
+    const handleClick = async () => {
+        setIsDrawing(true);
+        const storesLength = stores.length;
         const randomNum = getRandomNum(storesLength);
 
         getDrawShop(randomNum);
 
         slotAnimationHandler();
+
+        setIsDrawing(false);
     };
 
     const filteredStores = useMemo(() => {
-        return stores.filter(store =>
+        return allStores.filter(store =>
             selectedTags.every(tag => store.tags.includes(tag))
         );
-    }, [stores, selectedTags]);
+    }, [allStores, selectedTags]);
 
     useEffect(() => {
-        setAllStores(filteredStores);
+        setStores(filteredStores);
 
         if (filteredStores.length === 0) {
             setStatusText("無資料");
@@ -86,13 +90,17 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores, isLoading }) => {
                 {/* 滾輪title區 */}
                 <div className="lottery-roll-title font-sans" id="store-title">
                     {
-                        statusText ?
-                            <h5 className="flex justify-center items-center">
-                                {isLoading ? <Loader2Icon className="animate-loading" size={30} /> : statusText}
-                            </h5> : null
+                        isLoading ? <h5 className="flex justify-center items-center">
+                            <Loader2Icon className="animate-loading" size={30} />
+                        </h5> : null
                     }
                     {
-                        allStores.map((store) => {
+                        !isLoading && statusText ? <h5 className="flex justify-center items-center">
+                            {statusText}
+                        </h5> : null
+                    }
+                    {
+                        stores.map((store) => {
                             return (
                                 <h5 key={store.id}>{store.title}</h5>
                             )
@@ -100,7 +108,11 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ stores, isLoading }) => {
                     }
                 </div>
                 {/* 抽獎按鈕 */}
-                <button className="lottery-button" onClick={handleClick} disabled={allStores.length === 0}>
+                <button
+                    className="lottery-button disabled:bg-gray-400 disabled:border-gray-400  disabled:cursor-not-allowed"
+                    onClick={handleClick}
+                    disabled={isDrawing || stores.length === 0}
+                >
                     點我開抽
                 </button>
             </div>
