@@ -73,10 +73,12 @@ export const authOptions: AuthOptions = {
                 user: {
                     id: userData._id,
                     username: userData.username,
-                    email: userData.email
+                    email: userData.email,
+                    favoriteStores: userData.favoriteStores
                 }
             };
-            //return session // The return type will match the one returned in `useSession()`
+            // return session 
+            // The return type will match the one returned in `useSession()`
         },
     },
     debug: process.env.NODE_ENV === "development",
