@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+const storeSchema = new Schema({
+    id: { type: String, required: true },
+    title: { type: String, required: true },
+    src: { type: String, required: true },
+    tags: { type: [String], required: true },
+});
+
 const userSchema = new Schema(
     {
         username: {
@@ -22,7 +29,11 @@ const userSchema = new Schema(
         privilege: {
             type: String,
             required: false,
-        }
+        },
+        favoriteStore: {
+            type: [storeSchema],
+            required: false,
+        },
     },
     { timestamps: true }
 );

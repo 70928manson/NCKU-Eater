@@ -28,7 +28,8 @@ export const POST = async (request: Request) => {
         username,
         email,
         password: hashedPassword,
-        privilege: 'user'
+        privilege: 'user',
+        favoriteStores: []
     });
 
     try { 
