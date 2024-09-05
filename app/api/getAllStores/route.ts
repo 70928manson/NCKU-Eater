@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { Store } from "@/app/types/store";
-import { v4 as uuidv4 } from 'uuid';
 
 const DATA_SOURCE_URL = "https://sheets.googleapis.com/v4/spreadsheets/";
 
@@ -24,7 +23,7 @@ export async function GET() {
         const result: Store[] = stores.map((storeData: string[]) => {
             const tags = storeData[1].split(',').map(item => item.trim());
             return {
-                id: uuidv4(),
+                id: "",
                 title: storeData[0],
                 tags: tags,
                 src: storeData[2],

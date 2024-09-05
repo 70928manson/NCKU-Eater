@@ -2,6 +2,8 @@ import User from "@/models/User";
 import connect from "@/lib/db";
 import { NextResponse } from "next/server";
 
+import { v4 as uuidv4 } from 'uuid';
+
 export const POST = async (request: Request) => {
     const body = await request.json();
     const { email, store } = body;
@@ -33,6 +35,8 @@ export const POST = async (request: Request) => {
         if (isAlreadyFavorite) {
             return new NextResponse("Store already in favorites", { status: 400 });
         }
+
+        store.id = uuidv4();
 
         // 將 store 添加到 favoriteStores 中
         user.favoriteStores.push(store);
