@@ -39,7 +39,7 @@ const LocationMap = () => {
         if (session?.user?.email && store?.title.length > 0) {
             if (isFavorite && session?.user?.favoriteStores) {
                 const favoriteStore = session.user.favoriteStores.find(
-                    (favoriteStore) => favoriteStore.title === store.title
+                    (favoriteStore) => favoriteStore.id === store.id
                 );
 
                 const data = {
