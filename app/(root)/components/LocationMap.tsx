@@ -24,10 +24,7 @@ const LocationMap = () => {
 
     const mapRef = useRef<HTMLIFrameElement>(null);
 
-    const { data: session } = useSession();
-
     const getGoogleMapContent = (store: Store) => {
-        console.log("google store", store)
         const src = store.src;
         const duration = 1500; // 拉霸效果執行多久
         setTimeout(() => {
@@ -36,11 +33,29 @@ const LocationMap = () => {
         }, duration);
     };
 
-    const handleFavorite = () => {
-        console.log("user data", session?.user);
+    const handleFavorite = async () => {
+        const session = await fetchUpdatedSession();
+
         if (session?.user?.email && store?.title.length > 0) {
-            if (isFavorite) {
-                // 移除
+            if (isFavorite && session?.user?.favoriteStores) {
+                const favoriteStore = session.user.favoriteStores.find(
+                    (favoriteStore) => favoriteStore.title === store.title
+                );
+
+                const data = {
+                    email: session?.user?.email,
+                    storeId: favoriteStore?.id
+                };
+
+                axios.post('api/removeFavorite', data)
+                    .then((res) => {
+                        console.log("res", res)
+                        checkIfStoreIsFavorite()
+                    })
+                    .catch((err) => {
+                        console.log("err", err)
+                        toast.error(err.response.data);
+                    })
             } else {
                 const data = {
                     email: session?.user?.email,
@@ -53,7 +68,6 @@ const LocationMap = () => {
                     })
                     .catch((err) => {
                         console.log("err", err)
-                        // toast.error("Someting went wrong!");
                         toast.error(err.response.data);
                     })
             }
