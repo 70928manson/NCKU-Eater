@@ -29,7 +29,7 @@ export const POST = async (request: Request) => {
 
         // 檢查 store 是否已經在 favoriteStores 中
         const isAlreadyFavorite = user.favoriteStores.some(
-            (favoriteStore: any) => favoriteStore.id === store.id
+            (favoriteStore: any) => favoriteStore.src === store.src
         );
 
         if (isAlreadyFavorite) {
