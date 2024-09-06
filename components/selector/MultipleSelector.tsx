@@ -413,6 +413,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                         {
                             'px-3 py-2': selected.length !== 0,
                             'cursor-text': !disabled && selected.length !== 0,
+                            'cursor-not-allowed bg-gray-700 border-gray-700': disabled, // 手動設置樣式
                         },
                         className,
                     )}
