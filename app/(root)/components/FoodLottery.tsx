@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import FoodSelector from './FoodSelector'
 import { getRandomNum } from '@/app/utils';
 import { Store } from '@/app/types/store';
-import { updateStore } from '@/redux/slices/lotterySlices';
+import { updateIsDrawing, updateStore } from '@/redux/slices/lotterySlices';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Loader2Icon } from 'lucide-react';
@@ -16,11 +16,11 @@ interface FoodLotteryProps {
 
 const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
     const [statusText, setStatusText] = useState("今天吃什麼");
-    const [isDrawing, setIsDrawing] = useState(false);
 
     const [stores, setStores] = useState(allStores);
 
     const selectedTags = useSelector((state: RootState) => state.lottery.selectedTags);
+    const isDrawing = useSelector((state: RootState) => state.lottery.isDrawing);
 
     const dispatch = useDispatch();
 
@@ -32,7 +32,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
             // 停止拉霸動畫
             Array.prototype.forEach.call(list, item => item.removeAttribute('class'));
             setStatusText("");
-            setIsDrawing(false);
+            dispatch(updateIsDrawing(false));
         }, duration);
     };
 
@@ -57,7 +57,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
     };
 
     const handleClick = async () => {
-        setIsDrawing(true);
+        dispatch(updateIsDrawing(true));
         const storesLength = stores.length;
         const randomNum = getRandomNum(storesLength);
 
@@ -108,7 +108,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
                 </div>
                 {/* 抽獎按鈕 */}
                 <button
-                    className="lottery-button disabled:bg-gray-400 disabled:border-gray-400  disabled:cursor-not-allowed"
+                    className="lottery-button disabled:bg-gray-700 disabled:border-gray-700 disabled:cursor-not-allowed"
                     onClick={handleClick}
                     disabled={isDrawing || stores.length === 0}
                 >

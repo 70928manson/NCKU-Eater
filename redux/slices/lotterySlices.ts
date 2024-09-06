@@ -4,7 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface LotteryState {
     store: Store,
-    selectedTags: string[]
+    selectedTags: string[],
+    isDrawing: boolean
 }
 
 const initialState: LotteryState = {
@@ -14,7 +15,8 @@ const initialState: LotteryState = {
         src: '',
         tags: []
     },
-    selectedTags: []
+    selectedTags: [],
+    isDrawing: false,
 }
 
 export const lotterySlice = createSlice({
@@ -26,11 +28,14 @@ export const lotterySlice = createSlice({
         },
         updateSelectedTags: (state, action: PayloadAction<string[]>) => {
             state.selectedTags = action.payload;
+        },
+        updateIsDrawing: (state, action: PayloadAction<boolean>) => {
+            state.isDrawing = action.payload;
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateStore, updateSelectedTags } = lotterySlice.actions
+export const { updateStore, updateSelectedTags, updateIsDrawing } = lotterySlice.actions
 
 export default lotterySlice.reducer
