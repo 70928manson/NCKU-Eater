@@ -1,9 +1,12 @@
 import MultipleSelector, { Option } from '@/components/selector/MultipleSelector';
 import { OPTIONS } from '@/constants/options';
 import { updateSelectedTags } from '@/redux/slices/lotterySlices';
-import { useDispatch } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FoodSelector = () => {
+    const isDrawing = useSelector((state: RootState) => state.lottery.isDrawing);
+
     const dispatch = useDispatch();
 
     const handleSelectOnChange = (e: Option[]) => {
@@ -26,6 +29,7 @@ const FoodSelector = () => {
                 }
                 hidePlaceholderWhenSelected
                 onChange={(e:Option[]) => handleSelectOnChange(e)}
+                disabled={isDrawing}
             />
         </div>
     );
