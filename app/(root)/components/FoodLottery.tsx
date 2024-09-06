@@ -24,7 +24,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
 
     const dispatch = useDispatch();
 
-    const slotAnimationHandler = () => {
+    const slotAnimationHandler = async () => {
         const list = document.querySelectorAll('#store-title > h5');
         Array.prototype.forEach.call(list, item => item.classList.add(`span`));
         const duration = 1500; // 拉霸效果執行多久
@@ -32,6 +32,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
             // 停止拉霸動畫
             Array.prototype.forEach.call(list, item => item.removeAttribute('class'));
             setStatusText("");
+            setIsDrawing(false);
         }, duration);
     };
 
@@ -63,8 +64,6 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
         getDrawShop(randomNum);
 
         slotAnimationHandler();
-
-        setIsDrawing(false);
     };
 
     const filteredStores = useMemo(() => {
