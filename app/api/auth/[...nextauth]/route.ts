@@ -9,7 +9,7 @@ import InstagramProvider from "next-auth/providers/instagram";
 import User from "@/models/User";
 import connect from "@/lib/db";
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_CLIENT_ID as string,
