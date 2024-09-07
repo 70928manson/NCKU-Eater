@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+> 今天吃什麼～？
+>
+> 台南作為美食府城，有很多好吃的東東
+>
+> 不知道吃什麼的話，就快來開抽吧～～
+
 ## Getting Started
 
 First, run the development server:
