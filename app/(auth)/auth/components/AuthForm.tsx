@@ -68,7 +68,7 @@ const AuthForm = () => {
         },
     });
 
-    function onSubmit(data: z.infer<typeof formSchema>) {      
+    function onSubmit(data: z.infer<typeof formSchema>) {
         // sanitize, XSS 攻擊防範
         const sanitizedData = {
             email: DOMPurify.sanitize(data.email),
@@ -84,7 +84,7 @@ const AuthForm = () => {
             }
             // Axios Register
             axios.post('api/register', registerData)
-                .then(() => {                    
+                .then(() => {
                     signIn("crendentials", data);
                 })
                 .catch((err) => {
@@ -103,12 +103,13 @@ const AuthForm = () => {
                 ...sanitizedData,
                 redirect: false
             })
-                .then((callback) => {                    
+                .then((callback) => {
                     if (callback?.error) {
                         toast.error("Invalid credentials");
                     };
                     if (callback?.ok && !callback?.error) {
                         toast.success("Logged in!");
+                        router.prefetch('/');
                         router.push("/");
                     }
                 })
@@ -145,6 +146,7 @@ const AuthForm = () => {
 
         if (session?.status === "authenticated") {
             console.log("Auth good !!!");
+            router.prefetch('/');
             router.push("/");
         };
     }, [session?.status]);
