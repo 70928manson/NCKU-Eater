@@ -109,8 +109,8 @@ const AuthForm = () => {
                     };
                     if (callback?.ok && !callback?.error) {
                         toast.success("Logged in!");
-                        router.push("/");
                         router.refresh();
+                        router.push("/");
                     }
                 })
                 .catch((err) => {
@@ -146,8 +146,8 @@ const AuthForm = () => {
 
         if (session?.status === "authenticated") {
             console.log("Auth good !!!");
-            router.push("/");
             router.refresh();
+            router.push("/");
         };
     }, [session?.status]);
 
