@@ -109,8 +109,10 @@ const AuthForm = () => {
                     };
                     if (callback?.ok && !callback?.error) {
                         toast.success("Logged in!");
-                        router.refresh();
-                        router.push("/");
+
+                        console.log("vercel deploy login check")
+                        // router.refresh();
+                        // router.push("/");
                     }
                 })
                 .catch((err) => {
