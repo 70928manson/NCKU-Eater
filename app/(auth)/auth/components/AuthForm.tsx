@@ -101,7 +101,7 @@ const AuthForm = () => {
             // NextAuth Login
             signIn('credentials', {
                 ...sanitizedData,
-                redirect: false
+                redirect: true
             })
                 .then((callback) => {
                     if (callback?.error) {
