@@ -10,17 +10,11 @@ import { Store } from "../../types/store";
 
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Modal from "@/components/modal/Modal";
 
 export default function Favorite() {
     const [favoriteStores, setFavoriteStores] = useState<Store[]>([]);
@@ -114,28 +108,20 @@ export default function Favorite() {
                                         </h3>
                                         <AlertDialog>
                                             <AlertDialogTrigger asChild>
-                                                {/* <Trash2Icon size={24} className="cursor-pointer hover:text-red-500 transition-colors" /> */}
                                                 <button className="p-2 bg-dark-1 rounded-full hover:bg-dark-4 transition-colors">
                                                     <Trash2Icon size={24} className="text-white" />
                                                 </button>
                                             </AlertDialogTrigger>
-                                            <AlertDialogContent className="font-sans">
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>是否確認刪除 ?</AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                        <span className="font-bold">{store.title}</span>即將從我的最愛移除,
-                                                    </AlertDialogDescription>
-                                                    <AlertDialogDescription>
-                                                        刪了就無法復原哦 OAO
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>取消</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => handleDelete(store)}>
-                                                        <Trash2Icon size={18} className="mr-1" />刪除
-                                                    </AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
+                                            <Modal 
+                                                title="是否確認刪除"
+                                                content={[
+                                                    <><span className="font-bold text-[#f0bbbb]">{store.title} </span>即將從我的最愛移除</>,
+                                                    `刪了就無法復原哦 OAO`
+                                                ]}
+                                                icon={<Trash2Icon size={18} className="mr-1" />}
+                                                handleOk={() => handleDelete(store)}
+                                                modalType="Delete"
+                                            />
                                         </AlertDialog>
                                     </div>
                                     {/* Tag 列表，使用標籤樣式，並根據最長的標籤設定寬度 */}
@@ -150,7 +136,6 @@ export default function Favorite() {
                                             </span>
                                         ))}
                                     </div>
-                                    {/* <img src={store.src} alt={store.title} className="rounded-md" /> */}
                                 </div>
                             )
                         })}
