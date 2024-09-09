@@ -13,9 +13,13 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
-const LocationMap = () => {
+interface LocationMapProps {
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+};
+
+const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
     const [mapSrc, setMapSrc] = useState("");
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -71,6 +75,8 @@ const LocationMap = () => {
                         toast.error(err.response.data);
                     })
             }
+        } else {
+            setOpen(true);
         }
     };
 

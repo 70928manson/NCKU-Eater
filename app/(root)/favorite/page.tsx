@@ -120,6 +120,7 @@ export default function Favorite() {
                                                 ]}
                                                 icon={<Trash2Icon size={18} className="mr-1" />}
                                                 handleOk={() => handleDelete(store)}
+                                                handleCancel={() => {}}
                                                 modalType="Delete"
                                             />
                                         </AlertDialog>

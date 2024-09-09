@@ -19,12 +19,13 @@ interface ModalProps {
     content: ReactNode[];
     icon: ReactNode;
     handleOk: () => void;
+    handleCancel: () => void;
     modalType: ModalType;
     store?: string;
 }
 
 
-const Modal: React.FC<ModalProps> = ({ title, content, icon, handleOk, modalType }) => {
+const Modal: React.FC<ModalProps> = ({ title, content, icon, handleOk, handleCancel, modalType }) => {
 
     return (
         <>
@@ -44,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({ title, content, icon, handleOk, modalType
                     }
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>取消</AlertDialogCancel>
+                    <AlertDialogCancel onClick={() => handleCancel()}>取消</AlertDialogCancel>
                     <AlertDialogAction onClick={() => handleOk()}>
                         {icon}{modalType === "Delete" ? '刪除' : '登入'}
                     </AlertDialogAction>
