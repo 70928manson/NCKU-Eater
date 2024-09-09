@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Mochiy_Pop_One } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
-import ToasterContext from "./context/ToasterContext";
-import AuthContext from "./context/AuthContext";
+import ToasterContext from "../context/ToasterContext";
+import AuthContext from "../context/AuthContext";
 import ReduxProvider from "@/redux/ReduxProvider";
 
 import Navbar from "@/components/shared/navbar/Navbar";

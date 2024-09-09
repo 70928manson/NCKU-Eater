@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { Trash2Icon } from 'lucide-react';
 import { getSession } from "next-auth/react";
-import { Store } from "../types/store";
+import { Store } from "../../types/store";
 
 import {
     AlertDialog,
