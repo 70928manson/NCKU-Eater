@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { Bird, LogOutIcon, UserIcon } from 'lucide-react';
+import { Bird, HeartIcon, LogOutIcon } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -43,7 +43,12 @@ const Navbar = () => {
                                     <DropdownMenuLabel>{session?.data?.user?.username ? session?.data?.user?.username : 'Account'}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem className="cursor-pointer"> 
-                                        <UserIcon className="mr-2 h-4 w-4" /> Profile
+                                        <Link
+                                            href="/favorite"
+                                            className="flex items-center"
+                                        >
+                                          <HeartIcon className="mr-2" size={16} /> Favorite
+                                        </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem className="cursor-pointer"  onClick={() => signOut()}>  
                                         <LogOutIcon className="mr-2 h-4 w-4" />Sign Out
