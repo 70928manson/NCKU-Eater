@@ -5,7 +5,7 @@ import { Store } from '@/app/types/store';
 export const googleSheetApi = createApi({
     reducerPath: 'googleSheetApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: '/api/',  // 指向 Next.js 的 API route, 之後正式要改到 github
+        baseUrl: '/api/',  // 指向 Next.js 的 API route
     }),
     endpoints: (builder) => ({
         getAllStores: builder.query<Store[], "all">({
