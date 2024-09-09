@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 
 export default function Favorite() {
     const [favoriteStores, setFavoriteStores] = useState<Store[]>([]);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -32,6 +33,7 @@ export default function Favorite() {
         if (session?.user?.favoriteStores) {
             setFavoriteStores(session?.user?.favoriteStores)
         };
+        setIsDataLoaded(true);
     };
 
     // 找到所有 tags 中最長的標籤
@@ -90,9 +92,14 @@ export default function Favorite() {
             <h2 className="text-2xl md:text-3xl head-text tracking-widest mb-6">
                 My Favorite
             </h2>
-            {favoriteStores.length === 0 ? (
-                <p className="text-lg text-gray-400">你還沒有最愛的店家，快去添加吧！</p>
-            ) : (
+            {
+                !isDataLoaded &&
+                <p className="text-lg text-gray-400">資料載入中</p>
+            }
+            {
+                isDataLoaded && favoriteStores.length === 0 ? (
+                    <p className="text-lg text-gray-400">你還沒有最愛的店家，快去添加吧！</p>
+                ) : (
                     <div className="flex flex-wrap gap-6 w-[80%]">
                         {favoriteStores.map((store) => {
                             const maxTagLength = getMaxTagLength(store.tags); // 取得該店家 tags 最長的長度
@@ -102,7 +109,7 @@ export default function Favorite() {
                                     <div className="flex justify-between items-center mb-4">
                                         <h3 className="text-xl font-semibold truncate mr-1" title={store.title}>
                                             {/* <a href={store.src}> */}
-                                                {store.title}
+                                            {store.title}
                                             {/* </a> */}
                                         </h3>
                                         <AlertDialog>
@@ -116,7 +123,7 @@ export default function Favorite() {
                                                 <AlertDialogHeader>
                                                     <AlertDialogTitle>是否確認刪除 ?</AlertDialogTitle>
                                                     <AlertDialogDescription>
-                                                        <span className="font-bold">{store.title}</span>即將從我的最愛移除, 
+                                                        <span className="font-bold">{store.title}</span>即將從我的最愛移除,
                                                     </AlertDialogDescription>
                                                     <AlertDialogDescription>
                                                         刪了就無法復原哦 OAO
@@ -147,8 +154,8 @@ export default function Favorite() {
                                 </div>
                             )
                         })}
-                </div>
-            )}
+                    </div>
+                )}
         </div>
     );
 }
