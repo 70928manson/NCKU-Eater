@@ -26,9 +26,9 @@ export default function RootLayout({
                         <ToasterContext />
                         <main className="flex flex-row bg-dark-1">
                             <section className="main-container">
-                                <div className="w-full max-w-4xl mx-auto">
+                                <section className="w-full max-w-4xl mx-auto">
                                     {children}
-                                </div>
+                                </section>
                             </section>
                         </main>
                     </AuthContext>

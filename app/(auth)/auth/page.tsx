@@ -7,8 +7,8 @@ export default function Login() {
         <div className="w-full">
             <div
                 className="
-                  flex flex-col justify-center py-12
-                  px-5 sm:px-6 lg:px-8 bg-dark-1 text-light-1 w-full h-full
+                  flex flex-col justify-center 
+                   bg-dark-1 text-light-1 w-full h-full
                 "
             >
                 <AuthForm />
