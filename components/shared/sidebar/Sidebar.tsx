@@ -3,21 +3,20 @@
 import { sidebarLinks } from "@/constants/links";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { LogOutIcon } from 'lucide-react';
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const Sidebar = () => {
-    const router = useRouter();
     const pathname = usePathname();
 
-    const isUserLogIn = true;
+    const session = useSession();
+    const isUserLogIn = session?.status === "authenticated";
  
     return (
         <section className="custom-scrollbar sidebar">
             <div className="flex w-full flex-1 flex-col gap-6 px-6">
                 {sidebarLinks.map((link) => {
-                    // link route length > 1 => 排除Home
                     const isActive = (pathname.includes(link.route) && link.route.length > 1) || pathname === link.route;
                     return (
                         <Link
