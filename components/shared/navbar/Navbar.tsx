@@ -52,9 +52,12 @@ const Navbar = () => {
                             </DropdownMenu>
                         </div>
                     ) : (
-                            <div className="font-light flex gap-2 text-dark-1 text-sm tracking-widest border bg-white rounded px-4 py-1 cursor-pointer hover:bg-light-2">
-                                <Link href="/auth">登入</Link>
-                            </div>
+                           <Link 
+                                href="/auth"
+                                className="font-light flex gap-2 text-dark-1 text-sm tracking-widest border bg-white rounded px-4 py-1 cursor-pointer hover:bg-light-2"
+                            >
+                                登入
+                            </Link>
                     )
                 }
             </nav>
