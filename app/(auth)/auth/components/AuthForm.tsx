@@ -219,7 +219,7 @@ const AuthForm = () => {
                                 <div className="w-full border-t border-light-2" />
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="bg-[#6d71dd] px-2 text-light-1">
+                                <span className="bg-dark-2 px-2 text-light-1">
                                     OR
                                 </span>
                             </div>

@@ -24,11 +24,9 @@ export default function RootLayout({
                 <body className={`${mochiyPopOne.className} ${inter.className}`}>
                     <AuthContext>
                         <ToasterContext />
-                        <main className="flex flex-row bg-dark-1">
-                            <section className="main-container">
-                                <section className="w-full max-w-4xl mx-auto">
-                                    {children}
-                                </section>
+                        <main className="flex bg-dark-1 min-h-screen justify-center items-center">
+                            <section className="w-full max-w-4xl">
+                                {children}
                             </section>
                         </main>
                     </AuthContext>
