@@ -87,17 +87,17 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
             <FoodSelector />
             <div className="lottery">
                 {/* 滾輪title區 */}
-                <div className="lottery-roll-title font-sans" id="store-title">
-                    {
-                        isLoading ? <h5 className="flex justify-center items-center">
+                <div className="lottery-roll-item font-sans" id="store-title">
+                    {isLoading && (
+                        <h5 className="flex justify-center items-center">
                             <Loader2Icon className="animate-loading" size={30} />
-                        </h5> : null
-                    }
-                    {
-                        !isLoading && statusText ? <h5 className="flex justify-center items-center">
+                        </h5>
+                    )}
+                    {!isLoading && statusText && (
+                        <h5 className="flex justify-center items-center">
                             {statusText}
-                        </h5> : null
-                    }
+                        </h5>
+                    )}
                     {
                         stores.map((store) => {
                             return (
