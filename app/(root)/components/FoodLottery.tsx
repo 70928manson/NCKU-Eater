@@ -112,7 +112,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
                     onClick={handleClick}
                     disabled={isDrawing || stores.length === 0}
                 >
-                    點我開抽
+                    點擊抽獎
                 </button>
             </div>
         </div>
