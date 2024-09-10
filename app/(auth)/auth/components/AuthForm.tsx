@@ -109,10 +109,6 @@ const AuthForm = () => {
                     };
                     if (callback?.ok && !callback?.error) {
                         toast.success("Logged in!");
-
-                        console.log("vercel deploy login check")
-                        // router.refresh();
-                        // router.push("/");
                     }
                 })
                 .catch((err) => {
@@ -130,7 +126,7 @@ const AuthForm = () => {
         setIsLoading(true);
 
         // NextAuth Social Sign In
-        signIn(action, { redirect: false })
+        signIn(action, { redirect: true })
             .then((callback) => {
                 if (callback?.error) {
                     toast.error('Invalid Credentials');
@@ -140,20 +136,19 @@ const AuthForm = () => {
                     toast.success('Logged in');
                 };
             })
+            .catch((err) => {
+                console.log("err", err)
+            })
             .finally(() => setIsLoading(false));
     };
 
     useEffect(() => {
-        console.log("session", session);
-
         if (session?.status === "authenticated") {
-            console.log("Auth good !!!");
             router.refresh();
             router.push("/");
         };
     }, [session?.status]);
 
-    // h2 text-gray-900 bg-white
     return (
         <>
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -178,9 +173,6 @@ const AuthForm = () => {
                                                 <FormControl>
                                                     <Input className="text-black" suffixIcon={<UserIcon />} placeholder="username" disabled={isLoading} {...field} />
                                                 </FormControl>
-                                                {/* <FormDescription>
-                                                    This is your public display name.
-                                                </FormDescription> */}
                                                 <FormMessage />
                                             </FormItem>
                                         )}
@@ -196,9 +188,6 @@ const AuthForm = () => {
                                         <FormControl>
                                             <Input className="text-black" suffixIcon={<MailIcon />} placeholder="email" disabled={isLoading} {...field} />
                                         </FormControl>
-                                        {/* <FormDescription>
-                                            This is your public display email.
-                                            </FormDescription> */}
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -212,9 +201,6 @@ const AuthForm = () => {
                                         <FormControl>
                                             <PasswordInput className="text-black" placeholder="password" disabled={isLoading} {...field} />
                                         </FormControl>
-                                        {/* <FormDescription>
-                                            This is your password.
-                                            </FormDescription> */}
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -233,7 +219,7 @@ const AuthForm = () => {
                                 <div className="w-full border-t border-light-2" />
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="bg-dark-2 px-2 text-light-1">
+                                <span className="bg-[#6d71dd] px-2 text-light-1">
                                     OR
                                 </span>
                             </div>
@@ -249,10 +235,12 @@ const AuthForm = () => {
                                 icon={BsGoogle}
                                 onClick={() => socialAction('google')}
                             />
-                            <AuthSocialButton
+                            {/* TODO1: 決定要 FB 還是 IG, 哪個比較多人用
+                                TODO2: 考量後續新生, 要用抖音/小紅書!? OAO */}
+                            {/* <AuthSocialButton
                                 icon={BsInstagram}
                                 onClick={() => socialAction('instagram')}
-                            />
+                            /> */}
                         </div>
                     </div>
 
