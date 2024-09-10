@@ -16,9 +16,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
-    const session = useSession();
-    const isUserLogIn = session?.status === "authenticated";
-
+    const { data: session, status } = useSession();
+    const isUserLogIn = status === "authenticated";
 
     return (
         <header>
@@ -35,12 +34,12 @@ const Navbar = () => {
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
                                     <Avatar>
-                                        <AvatarImage src="https://github.com/shadcn.png" />
-                                        <AvatarFallback>CN</AvatarFallback>
+                                        <AvatarImage src={session?.user?.image || "https://github.com/shadcn.png"} alt="user picture" />
+                                        <AvatarFallback>...</AvatarFallback>
                                     </Avatar>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
-                                    <DropdownMenuLabel>{session?.data?.user?.username ? session?.data?.user?.username : 'Account'}</DropdownMenuLabel>
+                                    <DropdownMenuLabel>{session?.user?.username ? session?.user?.username : 'Account'}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem className="cursor-pointer"> 
                                         <Link
