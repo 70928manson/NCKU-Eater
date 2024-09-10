@@ -82,7 +82,7 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
 
     const fetchUpdatedSession = async () => {
         const session = await getSession();
-        
+
         return session;
     };
 
@@ -114,7 +114,7 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
 
     return (
         <div className="flex w-full h-full items-start">
-            <div className="w-full h-[25vh] xs:h-[40vh] md:h-[50vh] bg-white text-dark-1 relative mr-1">
+            <div className="w-full h-[25vh] xs:h-[40vh] md:h-[47vh] bg-white text-dark-1 relative mr-1">
                 <div className={clsx("w-full h-full absolute bg-dark-4", mapSrc && 'hidden')}>
                     <div className="w-full h-full flex justify-center items-center text-gray-1">Google map 顯示區</div>
                 </div>

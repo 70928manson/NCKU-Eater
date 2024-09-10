@@ -21,7 +21,7 @@ export default function Home() {
   const { data, error, isLoading } = useGetAllStoresQuery("all");
 
   const allStores = data || [];
-  
+
   const router = useRouter();
 
   const fetchUpdatedSession = async () => {
@@ -41,7 +41,7 @@ export default function Home() {
 
     loginModalOpen();
   }, []);
-  
+
   return (
     <>
       <div className="flex flex-col items-center w-full">
