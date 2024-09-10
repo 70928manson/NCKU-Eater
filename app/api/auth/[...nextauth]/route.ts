@@ -71,10 +71,11 @@ const authOptions: AuthOptions = {
             return {
                 ...session,
                 user: {
-                    id: userData._id,
-                    username: userData.username,
-                    email: userData.email,
-                    favoriteStores: userData.favoriteStores || []
+                    id: userData?._id,
+                    username: session?.user?.name || userData?.username,
+                    email: session?.user?.email || userData?.email,
+                    favoriteStores: userData?.favoriteStores || [],
+                    image: session?.user?.image || ""
                 }
             };
             // return session 
