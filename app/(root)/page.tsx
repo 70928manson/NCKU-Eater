@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <div className="h-full flex justify-center items-center">
       <div className="flex flex-col items-center w-full">
-        <h2 className="text-2xl md:text-3xl head-text tracking-widest mb-6">
+        <h2 className="text-2xl md:text-3xl head-text tracking-widest mb-6 mt-4 lg:mt-6">
           NCKU Food Draw
         </h2>
         <div className="text-light-1 w-full flex flex-col items-center">
