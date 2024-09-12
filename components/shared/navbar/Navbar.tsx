@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { Bird, HeartIcon, LogOutIcon } from 'lucide-react';
+import { Bird, HeartIcon, Loader2Icon, LogOutIcon } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -17,6 +17,7 @@ import {
 
 const Navbar = () => {
     const { data: session, status } = useSession();
+    console.log("status", status)
     const isUserLogIn = status === "authenticated";
 
     return (
@@ -41,27 +42,33 @@ const Navbar = () => {
                                 <DropdownMenuContent>
                                     <DropdownMenuLabel>{session?.user?.username ? session?.user?.username : 'Account'}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem className="cursor-pointer"> 
+                                    <DropdownMenuItem className="cursor-pointer">
                                         <Link
                                             href="/favorite"
                                             className="flex items-center"
                                         >
-                                          <HeartIcon className="mr-2" size={16} /> Favorite
+                                            <HeartIcon className="mr-2" size={16} /> Favorite
                                         </Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer"  onClick={() => signOut()}>  
+                                    <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
                                         <LogOutIcon className="mr-2 h-4 w-4" />Sign Out
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
                     ) : (
-                           <Link 
+                        status === "loading" ? (
+                            <div className="flex justify-center items-center text-white">
+                                <Loader2Icon className="animate-loading" size={30} />
+                            </div>
+                        ) : (
+                            <Link
                                 href="/auth"
                                 className="font-light flex gap-2 text-dark-1 text-sm tracking-widest border bg-white rounded px-4 py-1 cursor-pointer hover:bg-light-2"
                             >
                                 登入
                             </Link>
+                        )
                     )
                 }
             </nav>
