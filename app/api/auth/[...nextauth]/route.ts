@@ -33,7 +33,7 @@ const authOptions: AuthOptions = {
                 await connect();
                 // 無email 或 無password 狀況
                 if (!credentials?.email || !credentials?.password) {
-                    throw new Error('Invalid Crendentials')
+                    throw new Error('請輸入信箱與密碼')
                 };
 
                 try {
@@ -51,14 +51,14 @@ const authOptions: AuthOptions = {
                     );
 
                     if (!isCorrectPassword) {
-                        throw new Error('Invalid credentials')
+                        throw new Error('密碼錯誤')
                     };
 
                     return user;
-                }catch (err) {
+                }catch (err: any) {
                     console.log("err", err);
-                    
-                    throw new Error("Auth Error")
+                    throw new Error(err?.message || "認證錯誤");
+
                 }
             },
         })
