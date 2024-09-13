@@ -5,15 +5,16 @@
 Users can click the "Lottery" button to receive a random food recommendation, making it ideal for those who struggle with decision-making.  
 It offers filters for vegetarian, beef soup options allows users to save their favorite restaurants to a "Favorites" list.  
 
-### Key Features
-1. Built with Next.js to enhance performance and user experience.
-2. Implements multiple authentication methods using Next-Auth, including Credentials and OAuth (GitHub, Google).
-3. Utilizes TypeScript for type definitions, improving code maintainability and security.
-4. Manages global application state with Redux (RTK) to streamline state management.
-5. Designs the user interface with Shadcn/ui and Tailwind CSS.
-6. Stores user data in MongoDB. 
-7. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
-
+### Tech Stack
+1. Built with **Next.js** to enhance performance and user experience.
+2. Implements multiple authentication methods using **next-auth**, including Credentials and OAuth (GitHub, Google).
+3. Validates login and registration forms using **react-hook-form** and **zod**.
+4. Protects against XSS attacks by using  **DOMPurify** to sanitize user-generated content.
+5. Utilizes **TypeScript** for type definitions, improving code maintainability and security.
+6. Manages global application state with **Redux (RTK)** to streamline state management.
+7. Designs the user interface with **Shadcn/ui** and **Tailwind CSS**.
+8. Stores user data in **MongoDB**. 
+9. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
 
 ### Main Features
 
@@ -66,7 +67,7 @@ Go to [Google Cloud Console](https://cloud.google.com/cloud-console?hl=zh-tw) bu
 
 http://localhost:3000/api/auth/callback/google
 
-### 4. install Dependencies
+### 4. Install Dependencies
 
 Run the following command to install all required dependencies:
 
