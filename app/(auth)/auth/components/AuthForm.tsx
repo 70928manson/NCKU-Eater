@@ -104,7 +104,6 @@ const AuthForm = () => {
                 redirect: false
             })
                 .then((callback) => {
-                    console.log("callback", callback)
                     if (callback?.error) {
                         toast.error(callback?.error);
                     };
@@ -145,26 +144,10 @@ const AuthForm = () => {
     };
 
     useEffect(() => {
-        console.log("status 1", status)
         if (status === "authenticated") {
-            console.log("status 2", status)
             router.push("/");
         }
     }, [status, router]);
-    // useEffect(() => {
-    //     if (session?.status === "authenticated") {
-    //         router.refresh();
-    //         router.push("/");
-    //     };
-    // }, [session?.status]);
-    // useEffect(() => {
-    //     console.log("login check", isLogin);
-    //     if (isLogin && status === "authenticated") {
-    //         console.log("login ready, go to index");
-    //         router.refresh();
-    //         router.push("/");
-    //     }
-    // }, [isLogin])
 
     return (
         <>
