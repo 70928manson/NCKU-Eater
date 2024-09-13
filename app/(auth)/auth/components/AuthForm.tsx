@@ -47,7 +47,7 @@ const AuthForm = () => {
     const [variant, setVariant] = useState<Variant>('LOGIN');
     const [isLoading, setIsLoading] = useState(false);
 
-    const session = useSession();
+    const { data: session, status } = useSession()
     const router = useRouter();
 
     const toggleVariant = useCallback(() => {
@@ -101,11 +101,12 @@ const AuthForm = () => {
             // NextAuth Login
             signIn('credentials', {
                 ...sanitizedData,
-                redirect: true
+                redirect: false
             })
                 .then((callback) => {
+                    console.log("callback", callback)
                     if (callback?.error) {
-                        toast.error("Invalid credentials");
+                        toast.error(callback?.error);
                     };
                     if (callback?.ok && !callback?.error) {
                         toast.success("Logged in!");
@@ -113,6 +114,7 @@ const AuthForm = () => {
                 })
                 .catch((err) => {
                     console.log("err", err);
+                    toast.error("Logged failed!");
 
                 })
                 .finally(() => {
@@ -126,7 +128,7 @@ const AuthForm = () => {
         setIsLoading(true);
 
         // NextAuth Social Sign In
-        signIn(action, { redirect: true })
+        signIn(action)
             .then((callback) => {
                 if (callback?.error) {
                     toast.error('Invalid Credentials');
@@ -143,11 +145,26 @@ const AuthForm = () => {
     };
 
     useEffect(() => {
-        if (session?.status === "authenticated") {
-            router.refresh();
+        console.log("status 1", status)
+        if (status === "authenticated") {
+            console.log("status 2", status)
             router.push("/");
-        };
-    }, [session?.status]);
+        }
+    }, [status, router]);
+    // useEffect(() => {
+    //     if (session?.status === "authenticated") {
+    //         router.refresh();
+    //         router.push("/");
+    //     };
+    // }, [session?.status]);
+    // useEffect(() => {
+    //     console.log("login check", isLogin);
+    //     if (isLogin && status === "authenticated") {
+    //         console.log("login ready, go to index");
+    //         router.refresh();
+    //         router.push("/");
+    //     }
+    // }, [isLogin])
 
     return (
         <>
