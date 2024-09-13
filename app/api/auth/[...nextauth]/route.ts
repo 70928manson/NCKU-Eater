@@ -42,7 +42,7 @@ const authOptions: AuthOptions = {
                     });
 
                     if (!user || !user?.password) {
-                        throw new Error('Please confirm whether the email and password you entered are correct.');
+                        throw new Error('Invalid email or password. Please try again.');
                     };
 
                     const isCorrectPassword = await bcrypt.compare(
@@ -51,7 +51,7 @@ const authOptions: AuthOptions = {
                     );
 
                     if (!isCorrectPassword) {
-                        throw new Error('Please confirm whether the email address and password you entered are correct.')
+                        throw new Error('Invalid email or password. Please try again.')
                     };
 
                     if (user) {
