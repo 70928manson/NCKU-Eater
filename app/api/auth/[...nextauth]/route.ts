@@ -33,7 +33,7 @@ const authOptions: AuthOptions = {
                 await connect();
                 // 無email 或 無password 狀況
                 if (!credentials?.email || !credentials?.password) {
-                    throw new Error('請輸入信箱與密碼')
+                    throw new Error('Please enter your email and password')
                 };
 
                 try {
@@ -42,7 +42,7 @@ const authOptions: AuthOptions = {
                     });
 
                     if (!user || !user?.password) {
-                        throw new Error('Invalid credentials, no such user in db');
+                        throw new Error('Please confirm whether the email and password you entered are correct.');
                     };
 
                     const isCorrectPassword = await bcrypt.compare(
@@ -51,13 +51,17 @@ const authOptions: AuthOptions = {
                     );
 
                     if (!isCorrectPassword) {
-                        throw new Error('密碼錯誤')
+                        throw new Error('Please confirm whether the email address and password you entered are correct.')
                     };
 
-                    return user;
+                    if (user) {
+                        return user;
+                    } else {
+                        return null;
+                    }
                 }catch (err: any) {
                     console.log("err", err);
-                    throw new Error(err?.message || "認證錯誤");
+                    throw new Error(err?.message || "Auth Error");
 
                 }
             },
