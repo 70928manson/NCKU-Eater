@@ -67,8 +67,34 @@ const authOptions: AuthOptions = {
             },
         })
     ],
-    // https://next-auth.js.org/getting-started/typescript
     callbacks: {
+        async signIn({ account, profile }) {
+            await connect();
+            if (account?.provider === "google" || account?.provider === "github") {
+                // 檢查該 OAuth 使用者是否已經存在
+                const existingUser = await User.findOne({ email: profile?.email });
+
+                if (!existingUser) {
+                    // 新增使用者到資料庫
+                    const newUser = new User({
+                        username: profile?.name,
+                        email: profile?.email,
+                        password: null, // OAuth 使用者不會有本地密碼
+                        privilege: 'user',
+                        favoriteStores: []
+                    });
+
+                    try {
+                        await newUser.save(); // 儲存新使用者
+                    } catch (error) {
+                        console.error("Error saving OAuth user to DB", error);
+                        return false;
+                    }
+                }
+            }
+            return true;
+        },
+
         async session({ session, token, user }) {
             await connect();
             const userData = await User.findOne({ email: session?.user?.email, });
