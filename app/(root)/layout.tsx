@@ -16,7 +16,7 @@ const mochiyPopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "NCKU Eater 2.0",
-  description: "成大吃貨2.0, 美食抽抽樂",
+  description: "探索台南成大附近的必吃美食，為成大學生提供詳細的周遭台南美食推薦",
 };
 
 export default function RootLayout({

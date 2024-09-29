@@ -33,7 +33,7 @@ const authOptions: AuthOptions = {
                 await connect();
                 // 無email 或 無password 狀況
                 if (!credentials?.email || !credentials?.password) {
-                    throw new Error('請輸入信箱與密碼')
+                    throw new Error('Please enter your email and password')
                 };
 
                 try {
@@ -42,7 +42,7 @@ const authOptions: AuthOptions = {
                     });
 
                     if (!user || !user?.password) {
-                        throw new Error('Invalid credentials, no such user in db');
+                        throw new Error('Invalid email or password. Please try again.');
                     };
 
                     const isCorrectPassword = await bcrypt.compare(
@@ -51,20 +51,50 @@ const authOptions: AuthOptions = {
                     );
 
                     if (!isCorrectPassword) {
-                        throw new Error('密碼錯誤')
+                        throw new Error('Invalid email or password. Please try again.')
                     };
 
-                    return user;
+                    if (user) {
+                        return user;
+                    } else {
+                        return null;
+                    }
                 }catch (err: any) {
                     console.log("err", err);
-                    throw new Error(err?.message || "認證錯誤");
+                    throw new Error(err?.message || "Auth Error");
 
                 }
             },
         })
     ],
-    // https://next-auth.js.org/getting-started/typescript
     callbacks: {
+        async signIn({ account, profile }) {
+            await connect();
+            if (account?.provider === "google" || account?.provider === "github") {
+                // 檢查該 OAuth 使用者是否已經存在
+                const existingUser = await User.findOne({ email: profile?.email });
+
+                if (!existingUser) {
+                    // 新增使用者到資料庫
+                    const newUser = new User({
+                        username: profile?.name,
+                        email: profile?.email,
+                        password: null, // OAuth 使用者不會有本地密碼
+                        privilege: 'user',
+                        favoriteStores: []
+                    });
+
+                    try {
+                        await newUser.save(); // 儲存新使用者
+                    } catch (error) {
+                        console.error("Error saving OAuth user to DB", error);
+                        return false;
+                    }
+                }
+            }
+            return true;
+        },
+
         async session({ session, token, user }) {
             await connect();
             const userData = await User.findOne({ email: session?.user?.email, });

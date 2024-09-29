@@ -1,42 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NCKU Eater 2.0
 
-> 今天吃什麼～？
->
-> 台南作為美食府城，有很多好吃的東東
->
-> 不知道吃什麼的話，就快來開抽吧～～
+**NCKU Eater 2.0** is a food recommendation app designed to help users easily discover local dining options in Tainan.
+
+Users can click the "Lottery" button to receive a random food recommendation, making it ideal for those who struggle with decision-making.  
+It offers filters for vegetarian, beef soup options allows users to save their favorite restaurants to a "Favorites" list.  
+
+### Tech Stack
+1. Built with **Next.js** to enhance performance and user experience.
+2. Implements multiple authentication methods using **next-auth**, including Credentials and OAuth (GitHub, Google).
+3. Validates login and registration forms using **react-hook-form** and **zod**.
+4. Protects against XSS attacks by using  **DOMPurify** to sanitize user-generated content.
+5. Utilizes **TypeScript** for type definitions, improving code maintainability and security.
+6. Manages global application state with **Redux (RTK)** to streamline state management.
+7. Designs the user interface with **Shadcn/ui** and **Tailwind CSS**.
+8. Stores user data in **MongoDB**. 
+9. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
+
+### Main Features
+
+1. Randomly recommends Tainan food options.
+2. Filters restaurants offering vegetarian or beef soup options.
+3. Allows users to save restaurants to "Favorites."
+
+
+Test Account
+
+- Email: test@test.com
+- Password: test1234
+
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to clone and run the project locally:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/70928manson/NCKU-food-draw.git
+cd ncku-eater-2.0
+```
+
+### 2. Set Up Environment Variables
+
+Create a .env file in the root directory of the project. Use the provided .env.example file as a reference to fill in the required environment variables.
+
+
+```bash
+cp .env.example .env
+```
+
+Open the .env file and configure the necessary environment variables, such as database credentials, OAuth client secrets, and any other configuration needed for the application.
+
+For this repository, the enviroment vaiables is for mongodb, next-auth (basic, google and github provider), google sheet api 
+
+### 3. Configure OAuth Redirect Url
+
+#### Github:  
+Go to Github Develop Setting, register your OAuth Apps, and set up the callback URL to match your local development environment
+  
+http://localhost:3000/ or http://127.0.0.1:3000/
+
+
+#### Google:  
+
+Go to [Google Cloud Console](https://cloud.google.com/cloud-console?hl=zh-tw) build new repo, and search "Enabled APIs & Services" register OAuth,  set up the callback URL
+
+http://localhost:3000/api/auth/callback/google
+
+### 4. Install Dependencies
+
+Run the following command to install all required dependencies:
+
+```bash
+npm install
+```
+
+### 5. Start the Development Server
+
+Start the development server with:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and navigate to http://localhost:3000 to see the application in action.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Additional Notes
 
-## Learn More
+- Ensure you have Node.js and npm installed. If not, you can download and install them from Node.js official website.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- For further configuration details or troubleshooting, refer to the specific provider's documentation for OAuth setup, you can also contact me or create an issue. 
