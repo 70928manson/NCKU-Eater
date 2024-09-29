@@ -99,7 +99,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
                         </h5>
                     )}
                     {
-                        stores.slice(0, 7).map((store) => {
+                        stores.map((store) => {
                             return (
                                 <h5 key={store.id}>{store.title}</h5>
                             )
