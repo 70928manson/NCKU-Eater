@@ -17,7 +17,6 @@ import {
 
 const Navbar = () => {
     const { data: session, status } = useSession();
-    console.log("status", status)
     const isUserLogIn = status === "authenticated";
 
     return (

@@ -59,6 +59,7 @@ export default function Favorite() {
                 axios.post('api/removeFavorite', data)
                     .then((res) => {
                         console.log("res", res);
+                        toast.success("Delete Success!");
                         getFavoriteStores();
                     })
                     .catch((err) => {

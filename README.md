@@ -91,3 +91,10 @@ Open your browser and navigate to http://localhost:3000 to see the application i
 - Ensure you have Node.js and npm installed. If not, you can download and install them from Node.js official website.
 
 - For further configuration details or troubleshooting, refer to the specific provider's documentation for OAuth setup, you can also contact me or create an issue. 
+
+
+### Store Data
+The Google Sheet for managing store data can be found at the following link:
+- [Store Data Google Sheet](https://docs.google.com/spreadsheets/d/1NXi4UpfRAPiEKp6tNBejs2CgBAxpozYaN9xWlQEmQ9M/edit?gid=0#gid=0)
+
+Feel free to edit or add new entries to the sheet. Your contributions are welcome!
