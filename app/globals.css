@@ -159,11 +159,11 @@
 
   @keyframes spin {
     from {
-      top: 0;
+      transform: translateY(0);
     }
 
     to {
-      top: calc(-30px * 8);
+      transform: translateY(calc(-30px * 8));
     }
   }
 }
