@@ -1,7 +1,5 @@
-//取得隨機亂數
-export const getRandomNum = (arrayLength: number) => {
-    // 陣列的最大、小值
-    let max = arrayLength - 1;
-    let min = 0;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// 生成 min 到 max 之間的隨機數 (包含 min，不包含 max)
+// 取得隨機亂數 index
+export  const getRandomNum = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min) + min);
 }

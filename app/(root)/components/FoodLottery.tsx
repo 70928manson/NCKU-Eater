@@ -19,6 +19,8 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
 
     const [stores, setStores] = useState(allStores);
 
+    const visibleStores = stores.slice(0, 8); // 只渲染前 8 個 store
+
     const selectedTags = useSelector((state: RootState) => state.lottery.selectedTags);
     const isDrawing = useSelector((state: RootState) => state.lottery.isDrawing);
 
@@ -36,34 +38,40 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
         }, duration);
     };
 
-    // 亂數抽獎, 將陣列中隨機選到的店家與第一個店家互換
-    const getDrawShop = (randomNum: number) => {
-        const tempStores = [...stores]
-
-        // 儲存原來的 stores[0]
-        const firstStore = tempStores[0];
-
-        // 從 stores 中移除 stores[randomNum]，並將 stores[0] 放在該位置
-        // splice 返回被移除的元素 (splice 回傳陣列，所以取出第一個元素)
-        const removedStore = tempStores.splice(randomNum, 1, firstStore)[0];
-
-        // 將被移除的元素 (stores[randomNum] 原本的值) 賦值給 stores[0]
-        tempStores[0] = removedStore;
-
+    const getDrawShops = () => {
+        const tempStores = [...stores];
+        const drawCount = tempStores.length >= 8 ? 8 : tempStores.length; // 抽取的數量, 實際滾動的 stores
+    
+        // 抽取 8 個隨機店家並與前 8 個位置互換
+        for (let i = 0; i < drawCount; i++) {
+            // 隨機選取一個店家，範圍是從 i 到 stores 長度之間
+            
+            const randomIndex = getRandomNum(i, tempStores.length);
+    
+            // 儲存原來的 tempStores[i] 位置上的店家
+            const tempStore = tempStores[i];
+    
+            // 將 tempStores[randomIndex] 移到 tempStores[i] 的位置
+            tempStores[i] = tempStores[randomIndex];
+    
+            // 將原來的 tempStores[i] 放到 randomIndex 位置
+            tempStores[randomIndex] = tempStore;
+        }
+    
         setStores(tempStores);
-
-        // 將被抽中的店家資訊給 redux state, 給其他 component 使用
-        dispatch(updateStore(tempStores[0]));
+    
+        dispatch(updateStore(tempStores.slice(0, drawCount)[0]));
     };
 
     const handleClick = async () => {
         dispatch(updateIsDrawing(true));
-        const storesLength = stores.length;
-        const randomNum = getRandomNum(storesLength);
-
-        getDrawShop(randomNum);
-
-        slotAnimationHandler();
+    
+        getDrawShops(); // 抽取 8 個店家，並更新 stores 狀態
+    
+        setTimeout(() => {
+            // 等待 React 渲染 DOM 完成後再執行動畫
+            slotAnimationHandler();
+        }, 0);
     };
 
     const filteredStores = useMemo(() => {
@@ -99,7 +107,7 @@ const FoodLottery: React.FC<FoodLotteryProps> = ({ allStores, isLoading }) => {
                         </h5>
                     )}
                     {
-                        stores.map((store) => {
+                        visibleStores.map((store) => {
                             return (
                                 <h5 key={store.id}>{store.title}</h5>
                             )
