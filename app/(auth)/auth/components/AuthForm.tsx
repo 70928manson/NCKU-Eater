@@ -85,7 +85,7 @@ const AuthForm = () => {
             // Axios Register
             axios.post('api/register', registerData)
                 .then(() => {
-                    signIn("crendentials", data);
+                    signIn("credentials", data);
                 })
                 .catch((err) => {
                     console.log("err", err)
