@@ -4,12 +4,9 @@ import "../globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Sidebar from "@/components/shared/sidebar/Sidebar"
 import Footer from "@/components/shared/footer/Footer";
+import { seoMetadata } from "../seo/seo";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "NCKU Eater 2.0 | 成大美食抽抽樂"
-  }
-};
+export const metadata = seoMetadata;
 
 export default function DrawLayout({
   children,
