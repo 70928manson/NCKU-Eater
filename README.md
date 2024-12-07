@@ -1,9 +1,11 @@
 # NCKU Eater 2.0
 
-**NCKU Eater 2.0** is a food recommendation app designed to help users easily discover local dining options in Tainan.
+**NCKU Eater 2.0** is a food recommendation app that simplifies the process of discovering local dining options in Tainan.
 
-Users can click the "Lottery" button to receive a random food recommendation, making it ideal for those who struggle with decision-making.  
-It offers filters for vegetarian, beef soup options allows users to save their favorite restaurants to a "Favorites" list.  
+### Features
+1. **Random Food Recommendations**: Click the "Lottery" button to receive a random food suggestion, perfect for indecisive users.
+2. **Advanced Filter**s: Easily filter restaurants by vegetarian options or Tainan's famous beef soup.
+3. **Favorites Management**: Save your favorite restaurants to a personalized "Favorites" list for quick access.
 
 ### Tech Stack
 1. Built with **Next.js** to enhance performance and user experience.
@@ -15,13 +17,6 @@ It offers filters for vegetarian, beef soup options allows users to save their f
 7. Designs the user interface with **Shadcn/ui** and **Tailwind CSS**.
 8. Stores user data in **MongoDB**. 
 9. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
-
-### Main Features
-
-1. Randomly recommends Tainan food options.
-2. Filters restaurants offering vegetarian or beef soup options.
-3. Allows users to save restaurants to "Favorites."
-
 
 Test Account
 
