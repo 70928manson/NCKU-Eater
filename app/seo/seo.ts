@@ -9,6 +9,8 @@ export const seoMetadata: Metadata = {
     description: "台南成大美食抽抽樂 | NCKU Eater 2.0 帶你探索台南成大周邊那些你未曾想到的美食，輕鬆搞定每天煩惱不知道吃什麼的人生難題",
     keywords: [
         '成大美食',
+        '成大美食抽抽樂',
+        '成大美食抽獎',
         '台南美食',
         '成功大學周邊美食',
         '成大附近餐廳',

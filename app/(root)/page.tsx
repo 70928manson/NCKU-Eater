@@ -46,8 +46,8 @@ export default function Home() {
   return (
     <div className="h-full flex justify-center items-center">
       <div className="flex flex-col items-center w-full">
-        <h1 className="text-2xl md:text-3xl head-text tracking-widest mb-6 mt-4 lg:mt-6">
-          NCKU Food Draw
+        <h1 className="font-medium text-2xl md:text-3xl head-text tracking-widest mb-6 mt-4 lg:mt-6">
+          成大美食抽抽樂
         </h1>
         <div className="text-light-1 w-full flex flex-col items-center">
           <FoodLottery allStores={allStores} isLoading={isLoading} />

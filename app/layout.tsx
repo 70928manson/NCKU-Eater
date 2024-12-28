@@ -1,3 +1,5 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 import type { Metadata } from "next";
 import { Inter, Mochiy_Pop_One } from "next/font/google";
 import "./globals.css";
@@ -9,6 +11,8 @@ import ReduxProvider from "@/redux/ReduxProvider";
 const inter = Inter({ subsets: ["latin"] });
 const mochiyPopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
 // other good font: Mochiy Pop One, Potta One, BIZ UDPMincho, Zen Maru Gothic, NotoSerifTC
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID || '';
 
 export const metadata: Metadata = {
     title: "NCKU Eater 2.0 | 成大美食抽抽樂",
@@ -34,6 +38,7 @@ export default function RootLayout({
                     </ReduxProvider>
                 </AuthContext>
             </body>
+            <GoogleAnalytics gaId={gaId} />
         </html>
     );
 }
