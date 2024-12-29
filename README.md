@@ -80,7 +80,7 @@ Start the development server with:
 npm run dev
 ```
 
-Open your browser and navigate to http://localhost:3000 to see the application in action.
+Visit http://localhost:3000 to view the application in action.
 
 ### Additional Notes
 
