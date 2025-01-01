@@ -48,7 +48,7 @@ cp .env.example .env
 
 Open the .env file and configure the necessary environment variables, such as database credentials, OAuth client secrets, and any other configuration needed for the application.
 
-For this repository, the enviroment vaiables is for mongodb, next-auth (basic, google and github provider), google sheet api
+For this repository, the environment variables is for mongodb, next-auth (basic, google and github provider), google sheet api
 
 ### 3. Configure OAuth Redirect Url
 
