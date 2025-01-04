@@ -38,18 +38,13 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
     };
 
     const handleFavorite = async () => {
-        console.log("store", store)
         const session = await fetchUpdatedSession();
 
         if (session?.user?.email && store?.title.length > 0) {
             if (isFavorite && session?.user?.favoriteStores) {
                 const favoriteStore = session.user.favoriteStores.find(
-                    (favoriteStore) => favoriteStore.id === store.id
+                    (favoriteStore) => favoriteStore.title === store.title
                 );
-
-                console.log("Location map session", session)
-                console.log("Location map store", store)
-                console.log("Location map favoriteStore", favoriteStore)
 
                 const data = {
                     email: session?.user?.email,
