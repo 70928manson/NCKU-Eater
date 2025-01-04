@@ -53,7 +53,8 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
 
                 axios.post('api/removeFavorite', data)
                     .then((res) => {
-                        console.log("res", res)
+                        console.log("res", res);
+                        toast.success("Removed from Favorites Successfully!");
                         checkIfStoreIsFavorite()
                     })
                     .catch((err) => {
@@ -67,7 +68,8 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
                 };
                 axios.post('api/addFavorite', data)
                     .then((res) => {
-                        console.log("res", res)
+                        console.log("res", res);
+                        toast.success("Added to Favorites Successfully!");
                         checkIfStoreIsFavorite()
                     })
                     .catch((err) => {
