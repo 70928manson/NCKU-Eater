@@ -21,7 +21,7 @@
 9. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
 
 ```
-Test Account:
+Demo Test Account:
 
 - Email: test@test.com
 - Password: test1234
