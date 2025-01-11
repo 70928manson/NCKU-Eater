@@ -17,7 +17,7 @@
 5. Utilizes **TypeScript** for type definitions, improving code maintainability and security.
 6. Manages global application state with **Redux (RTK)** to streamline state management.
 7. Designs the user interface with **Shadcn/ui** and **Tailwind CSS**.
-8. Stores user data in **MongoDB**.
+8. Stores user data in **MongoDB** Atlas.
 9. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
 
 ```
