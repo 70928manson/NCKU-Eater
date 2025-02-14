@@ -3,7 +3,7 @@ import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { Store } from '@/app/types/store';
-import { HeartIcon } from 'lucide-react';
+import { HeartIcon, MessageSquareMoreIcon, } from 'lucide-react';
 import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -15,6 +15,17 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 interface LocationMapProps {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 };
@@ -22,6 +33,10 @@ interface LocationMapProps {
 const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
     const [mapSrc, setMapSrc] = useState("");
     const [isFavorite, setIsFavorite] = useState(false);
+    // const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+
+    // const [commentInput, setCommentInput] = useState("");
+    // const [comments, setComments] = useState<string[]>(["超讚"]);
 
     const store = useSelector((state: RootState) => state.lottery.store);
     const selectedTags = useSelector((state: RootState) => state.lottery.selectedTags);
@@ -38,12 +53,14 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
     };
 
     const handleFavorite = async () => {
+        if (store?.title.length === 0) return;
+
         const session = await fetchUpdatedSession();
 
         if (session?.user?.email && store?.title.length > 0) {
             if (isFavorite && session?.user?.favoriteStores) {
                 const favoriteStore = session.user.favoriteStores.find(
-                    (favoriteStore) => favoriteStore.id === store.id
+                    (favoriteStore) => favoriteStore.title === store.title
                 );
 
                 const data = {
@@ -102,7 +119,18 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
                 setIsFavorite(false)
             }
         }
-    }
+    };
+
+    // const toggleCommentModal = () => {
+    //     if (store?.title.length === 0) return;
+    //     setIsCommentModalOpen((prev) => !prev);
+    // };
+
+    // const handleAddComment = () => {
+    //     if (commentInput.trim() === "") return;
+    //     setComments((prev) => [...prev, commentInput]);
+    //     setCommentInput("");
+    // };
 
     useEffect(() => {
         getGoogleMapContent(store);
@@ -110,10 +138,10 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
 
     useEffect(() => {
         setIsFavorite(false);
-    }, [selectedTags])
+    }, [selectedTags]);
 
     return (
-        <div className="flex w-full h-full items-start">
+        <div className="flex w-full h-full items-start relative">
             <div className="w-full h-[25vh] xs:h-[40vh] md:h-[47vh] bg-white text-dark-1 relative mr-1">
                 <div className={clsx("w-full h-full absolute bg-dark-4", mapSrc && 'hidden')}>
                     <div className="w-full h-full flex justify-center items-center text-gray-1">Google map 顯示區</div>
@@ -128,16 +156,66 @@ const LocationMap: React.FC<LocationMapProps> = ({ setOpen }) => {
                     referrerPolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger>
-                        <HeartIcon onClick={handleFavorite} color={isFavorite ? 'red' : 'white'} size={24} />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        {isFavorite ? <p>移除我的最愛</p> : <p>加入我的最愛</p>}
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+            <div className="flex flex-col gap-8 absolute -top-0 -right-8">
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <HeartIcon onClick={handleFavorite} color={isFavorite ? 'red' : 'white'} size={28} className={store.title.length === 0 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            {isFavorite ? <p>移除我的最愛</p> : <p>加入我的最愛</p>}
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                {/* <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Dialog open={isCommentModalOpen} onOpenChange={toggleCommentModal}>
+                                <DialogTrigger asChild>
+                                    <MessageSquareMoreIcon size={28} className={store.title.length === 0 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} />
+                                </DialogTrigger>
+                                <DialogContent className="max-w-md font-sans bg-dark-1">
+                                    <DialogHeader>
+                                        <DialogTitle className="text-white">評論</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4">
+                                        <Input
+                                            placeholder="輸入您的評論..."
+                                            value={commentInput}
+                                            onChange={(e) => setCommentInput(e.target.value)}
+                                        />
+                                        <div className="max-h-48 overflow-y-auto space-y-2">
+                                            {comments.length === 0 ? (
+                                                <p className="text-sm text-gray-500">尚無評論</p>
+                                            ) : (
+                                                comments.map((comment, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="p-2 bg-gray-300 rounded-md text-sm text-gray-800"
+                                                    >
+                                                        {comment}
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                    </div>
+                                    <DialogFooter>
+                                        <Button variant="outline" onClick={() => setIsCommentModalOpen(false)}>
+                                            關閉
+                                        </Button>
+                                        <Button onClick={handleAddComment} disabled={commentInput.trim() === ""}>
+                                            提交評論
+                                        </Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>查看評論</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider> */}
+            </div>
         </div>
     )
 }
