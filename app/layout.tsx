@@ -9,7 +9,7 @@ import AuthContext from "./context/AuthContext";
 import ReduxProvider from "@/redux/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
-const mochiyPopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
+const mochiy_PopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
 // other good font: Mochiy Pop One, Potta One, BIZ UDPMincho, Zen Maru Gothic, NotoSerifTC
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID || '';
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${mochiyPopOne.className} ${inter.className}`}>
+            <body className={`${mochiy_PopOne.className} ${inter.className}`}>
                 <AuthContext>
                     <ReduxProvider>
                         <ToasterContext />
