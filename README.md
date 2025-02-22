@@ -56,7 +56,15 @@ For this repository, the environment variables is for mongodb, next-auth (basic,
 
 Go to Github Develop Setting, register your OAuth Apps, and set up the callback URL to match your local development environment
 
-http://localhost:3000/ or http://127.0.0.1:3000/
+```
+http://localhost:3000/
+```
+
+or
+
+```
+http://127.0.0.1:3000/
+```
 
 #### Google:
 
