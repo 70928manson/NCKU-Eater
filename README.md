@@ -10,7 +10,7 @@
 
 ### Tech Stack
 
-1. Built with **Next.js** to enhance performance and user experience.
+1. Built with **Next.js 14** to enhance performance and user experience.
 2. Implements multiple authentication methods using **next-auth**, including Credentials and OAuth (GitHub, Google).
 3. Validates login and registration forms using **react-hook-form** and **zod**.
 4. Protects against XSS attacks by using **DOMPurify** to sanitize user-generated content.
@@ -56,7 +56,15 @@ For this repository, the environment variables is for mongodb, next-auth (basic,
 
 Go to Github Develop Setting, register your OAuth Apps, and set up the callback URL to match your local development environment
 
-http://localhost:3000/ or http://127.0.0.1:3000/
+```
+http://localhost:3000/
+```
+
+or
+
+```
+http://127.0.0.1:3000/
+```
 
 #### Google:
 
