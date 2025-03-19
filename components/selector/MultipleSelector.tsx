@@ -480,7 +480,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                             }}
                             placeholder={hidePlaceholderWhenSelected && selected.length !== 0 ? '' : placeholder}
                             className={cn(
-                                'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
+                                'flex-1 bg-transparent outline-none text-muted placeholder:text-muted-foreground',
                                 {
                                     'w-full': hidePlaceholderWhenSelected,
                                     'px-3 py-3': selected.length === 0,
