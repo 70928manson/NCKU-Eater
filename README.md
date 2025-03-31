@@ -20,8 +20,10 @@
 8. Stores user data in **MongoDB** Atlas.
 9. Integrates Google Sheets API as a restaurant database, allowing for easy online editing and updating of restaurant information to ensure real-time accuracy and accessibility.
 
+You can use the following test account to access the demo website:
+
 ```
-Demo Test Account:
+Test Account:
 
 - Email: test@test.com
 - Password: test1234
