@@ -18,7 +18,22 @@ import Modal from "@/components/modal/Modal";
 import TagList from "@/components/tagList/tagList";
 
 export default function Favorite() {
-    const [favoriteStores, setFavoriteStores] = useState<Store[]>([]);
+    const [favoriteStores, setFavoriteStores] = useState<Store[]>([{
+        id: "1",
+        title: "test",
+        src: "test",
+        tags: ["test"]
+    }, {
+        id: "2",
+        title: "體育場樺哥土s121212999999999999",
+        src: "test2",
+        tags: ["test2"]
+    },{
+        id: "3",
+        title: "test3",
+        src: "test3",
+        tags: ["test3"]
+    }]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const dispatch = useDispatch();
@@ -101,31 +116,48 @@ export default function Favorite() {
                             const maxTagLength = getMaxTagLength(store.tags); // 取得該店家 tags 最長的長度
 
                             return (
-                                <div key={store.id} className="bg-[#3f3f3f] text-white p-4 rounded-md shadow-md hover:shadow-lg transition-shadow font-sans w-full">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="text-xl font-semibold truncate mr-1" title={store.title}>
-                                            {store.title}
-                                        </h3>
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <button className="p-2 bg-dark-1 rounded-full hover:bg-dark-4 transition-colors">
-                                                    <Trash2Icon size={24} className="text-white" />
-                                                </button>
-                                            </AlertDialogTrigger>
-                                            <Modal
-                                                title="是否確認刪除"
-                                                content={[
-                                                    <><span className="font-bold text-[#f0bbbb]">{store.title} </span>即將從我的最愛移除</>,
-                                                    `刪了就無法復原哦 OAO`
-                                                ]}
-                                                icon={<Trash2Icon size={18} className="mr-1" />}
-                                                handleOk={() => handleDelete(store)}
-                                                handleCancel={() => { }}
-                                                modalType="Delete"
-                                            />
-                                        </AlertDialog>
+                                <div key={store.id} className="group relative bg-gradient-to-br from-neutral-800 to-neutral-900 border border-neutral-700 text-white p-6 rounded-xl shadow-xl hover:shadow-2xl hover:shadow-white/5 transition-all duration-300 ease-out hover:scale-[1.02] hover:border-neutral-600 font-sans w-full overflow-hidden">
+                                    {/* 頂部細線裝飾 */}
+                                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+
+                                    <div className="relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <div className="flex-1 mr-3 min-w-0">
+                                                <h3 className="text-xl font-bold text-white group-hover:text-gray-100 transition-colors duration-200 leading-tight truncate" title={store.title}>
+                                                    {store.title}
+                                                </h3>
+                                            </div>
+                                            
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild>
+                                                    <button className="relative p-2.5 bg-neutral-700/80 hover:bg-red-500/20 border border-neutral-600/50 hover:border-red-400/30 rounded-lg transition-all duration-200 group/button backdrop-blur-sm">
+                                                        <Trash2Icon 
+                                                            size={20} 
+                                                            className="text-neutral-400 group-hover/button:text-red-400 transition-colors duration-200" 
+                                                        />
+                                                    </button>
+                                                </AlertDialogTrigger>
+                                                <Modal
+                                                    title="是否確認刪除"
+                                                    content={[
+                                                        <><span className="font-bold text-[#f0bbbb]">{store.title} </span>即將從我的最愛移除</>,
+                                                        `刪了就無法復原哦 OAO`
+                                                    ]}
+                                                    icon={<Trash2Icon size={18} className="mr-1" />}
+                                                    handleOk={() => handleDelete(store)}
+                                                    handleCancel={() => { }}
+                                                    modalType="Delete"
+                                                />
+                                            </AlertDialog>
+                                        </div>
+                                        
+                                        {/* 分隔線 */}
+                                        <div className="h-px bg-gradient-to-r from-transparent via-neutral-600 to-transparent mb-4 group-hover:via-neutral-500 transition-colors duration-300"></div>
+                                        
+                                        <TagList tags={store.tags} maxTagLength={maxTagLength} />
                                     </div>
-                                    <TagList tags={store.tags} maxTagLength={maxTagLength} />
+
+
                                 </div>
                             )
                         })}
