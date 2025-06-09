@@ -18,22 +18,7 @@ import Modal from "@/components/modal/Modal";
 import TagList from "@/components/tagList/tagList";
 
 export default function Favorite() {
-    const [favoriteStores, setFavoriteStores] = useState<Store[]>([{
-        id: "1",
-        title: "test",
-        src: "test",
-        tags: ["test"]
-    }, {
-        id: "2",
-        title: "體育場樺哥土s121212999999999999",
-        src: "test2",
-        tags: ["test2"]
-    },{
-        id: "3",
-        title: "test3",
-        src: "test3",
-        tags: ["test3"]
-    }]);
+    const [favoriteStores, setFavoriteStores] = useState<Store[]>([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const dispatch = useDispatch();
