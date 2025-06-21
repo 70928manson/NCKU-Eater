@@ -10,7 +10,7 @@ import ReduxProvider from "@/redux/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const mochiy_PopOne = Mochiy_Pop_One({ weight: ["400"], subsets: ["latin"] });
-// other good font: Mochiy Pop One, Potta One, BIZ UDPMincho, Zen Maru Gothic, NotoSerifTC
+// other good font: Huninn(粉圓體), Mochiy Pop One, Potta One, BIZ UDPMincho, Zen Maru Gothic, NotoSerifTC
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID || '';
 
